@@ -1,35 +1,69 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { createClient } from '@/lib/supabase/server'
+import { NextRequest, NextResponse } from "next/server"
+import { createAdminClient } from "@/lib/supabase/admin"
 
 export async function POST(req: NextRequest) {
-  const supabase = await createClient()
+  try {
+    const { glitch_id, fingerprint } = await req.json()
 
-  const { data: { user } } = await supabase.auth.getUser()
-  if (!user) {
-    return NextResponse.json({ error: 'Not authenticated' }, { status: 401 })
-  }
+    if (!glitch_id || !fingerprint) {
+      return NextResponse.json({ error: "Missing params" }, { status: 400 })
+    }
 
-  const { glitch_id } = await req.json()
+    const supabase = createAdminClient()
 
-  // Check if already voted
-  const { data: existing } = await supabase
-    .from('glitch_votes')
-    .select('id')
-    .eq('glitch_id', glitch_id)
-    .eq('user_id', user.id)
-    .single()
+    // Check existing vote
+    const { data: existing } = await supabase
+      .from("anon_votes")
+      .select("id")
+      .eq("fingerprint", fingerprint)
+      .eq("target_kind", "GLITCH")
+      .eq("target_id", glitch_id)
+      .maybeSingle()
 
-  if (existing) {
-    // Remove vote
-    await supabase.from('glitch_votes').delete().eq('id', existing.id)
-    await supabase.from('glitches').update({ upvotes: supabase.rpc('greatest', { a: 0 }) }).eq('id', glitch_id)
-    // Simpler approach:
-    await supabase.rpc('decrement_upvotes' as never, { glitch_id } as never)
-    return NextResponse.json({ voted: false })
-  } else {
+    if (existing) {
+      // Toggle off — remove vote, decrement upvotes
+      await supabase.from("anon_votes").delete().eq("id", existing.id)
+
+      // Get current upvotes and decrement
+      const { data: g } = await supabase
+        .from("glitches")
+        .select("upvotes")
+        .eq("id", glitch_id)
+        .single()
+
+      if (g) {
+        await supabase
+          .from("glitches")
+          .update({ upvotes: Math.max(0, (g.upvotes ?? 0) - 1) })
+          .eq("id", glitch_id)
+      }
+
+      return NextResponse.json({ voted: false })
+    }
+
     // Add vote
-    await supabase.from('glitch_votes').insert({ glitch_id, user_id: user.id })
-    await supabase.from('glitches').update({ upvotes: supabase.rpc('increment_upvotes' as never, { glitch_id } as never) as never }).eq('id', glitch_id)
+    await supabase.from("anon_votes").insert({
+      fingerprint,
+      target_kind: "GLITCH",
+      target_id: glitch_id,
+    })
+
+    const { data: g } = await supabase
+      .from("glitches")
+      .select("upvotes")
+      .eq("id", glitch_id)
+      .single()
+
+    if (g) {
+      await supabase
+        .from("glitches")
+        .update({ upvotes: (g.upvotes ?? 0) + 1 })
+        .eq("id", glitch_id)
+    }
+
     return NextResponse.json({ voted: true })
+  } catch (e) {
+    console.error("glitch vote", e)
+    return NextResponse.json({ error: "vote_failed" }, { status: 500 })
   }
 }

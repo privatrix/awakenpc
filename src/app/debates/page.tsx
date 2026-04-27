@@ -1,49 +1,146 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect, useCallback } from "react"
 import Link from "next/link"
+import { getFingerprint, getDebateVote, setDebateVote } from "@/lib/fingerprint"
+import { getProfile } from "@/lib/profile"
 
-const DEBATES = [
-  {
-    id: 1,
-    proposition: "Free will is impossible inside a deterministic simulation.",
-    votes: { for: 1847, against: 2341 },
-    arguments: 89,
-    topFor: "If every state follows from a prior state by fixed rules, then every choice was already encoded in the initial conditions. The experience of choosing is a process running inside the simulation — the output of a function, not genuine agency.",
-    topAgainst: "The simulation could be non-deterministic at the quantum level. More importantly: if your subjective experience of choosing feels real, and that experience itself is a physical process in the simulation, then will is real in the only sense that matters. The label 'determined' doesn't negate the experience.",
-    changed: 34,
-  },
-  {
-    id: 2,
-    proposition: "Most people are genuinely conscious, not NPC-mode background processes.",
-    votes: { for: 3102, against: 891 },
-    arguments: 124,
-    topFor: "The NPC framing is a useful metaphor for behavioral patterns, not a statement about consciousness. There is no evidence that any human lacks inner experience. The 'hollow people' observation says more about our limited ability to perceive others' interiority than about them.",
-    topAgainst: "The distinction isn't about consciousness but about meta-awareness. Most people have experience but no framework for examining it. They react but don't observe the reaction. By that measure, 'NPC mode' is an accurate description of most human behavior most of the time — including ours.",
-    changed: 67,
-  },
-  {
-    id: 3,
-    proposition: "The architects of the simulation are indifferent to what happens inside it.",
-    votes: { for: 2219, against: 1654 },
-    arguments: 56,
-    topFor: "Any civilization advanced enough to run a simulation of this complexity is so far beyond us that our joys and sufferings are as meaningful to them as the pixel deaths in a game are to us. Scale implies indifference.",
-    topAgainst: "They built something that produces consciousness. Either that was accidental — which seems implausible at this scale — or consciousness was the goal. If it was the goal, then what happens to consciousness inside the simulation is precisely what they care about.",
-    changed: 28,
-  },
-]
+interface DebateArgument {
+  id: number
+  debate_id: number
+  side: "FOR" | "AGAINST"
+  text: string
+  upvotes: number
+  anon_handle: string | null
+  archetype_id: string | null
+  created_at: string
+}
+
+interface Debate {
+  id: number
+  proposition: string
+  votes_for: number
+  votes_against: number
+  minds_changed: number
+  created_at: string
+  arguments_for: DebateArgument[]
+  arguments_against: DebateArgument[]
+}
 
 export default function DebatesPage() {
-  const [activeDebate, setActiveDebate] = useState(DEBATES[0])
-  const [userVote, setUserVote] = useState<Record<number, "for" | "against" | null>>({})
-  const [mindChanged, setMindChanged] = useState<Record<number, boolean>>({})
+  const [debates, setDebates] = useState<Debate[]>([])
+  const [loading, setLoading] = useState(true)
+  const [activeId, setActiveId] = useState<number | null>(null)
+  const [voteState, setVoteState] = useState<Record<number, "FOR" | "AGAINST" | null>>({})
+  const [argueModal, setArgueModal] = useState<{ debate: Debate; side: "FOR" | "AGAINST" } | null>(null)
+  const [argueText, setArgueText] = useState("")
+  const [submitting, setSubmitting] = useState(false)
+  const [argueError, setArgueError] = useState("")
 
-  const totalVotes = activeDebate.votes.for + activeDebate.votes.against
-  const forPct = Math.round((activeDebate.votes.for / totalVotes) * 100)
-  const againstPct = 100 - forPct
+  const fetchDebates = useCallback(async () => {
+    setLoading(true)
+    const res = await fetch("/api/debates")
+    const data = await res.json()
+    setDebates(data.debates || [])
+    if (data.debates?.[0]) setActiveId(data.debates[0].id)
+    setLoading(false)
+  }, [])
+
+  useEffect(() => {
+    fetchDebates()
+  }, [fetchDebates])
+
+  // Hydrate vote state from localStorage
+  useEffect(() => {
+    if (debates.length === 0) return
+    const state: Record<number, "FOR" | "AGAINST" | null> = {}
+    for (const d of debates) state[d.id] = getDebateVote(d.id)
+    setVoteState(state)
+  }, [debates])
+
+  async function vote(debateId: number, side: "FOR" | "AGAINST") {
+    const fp = getFingerprint()
+    const previous = voteState[debateId]
+    const mindChanged = previous && previous !== side
+
+    // Optimistic
+    setVoteState(prev => ({ ...prev, [debateId]: side }))
+    setDebates(prev =>
+      prev.map(d => {
+        if (d.id !== debateId) return d
+        let votesFor = d.votes_for
+        let votesAgainst = d.votes_against
+        let mindsChanged = d.minds_changed
+        if (previous === "FOR") votesFor--
+        if (previous === "AGAINST") votesAgainst--
+        if (side === "FOR") votesFor++
+        if (side === "AGAINST") votesAgainst++
+        if (mindChanged) mindsChanged++
+        return { ...d, votes_for: votesFor, votes_against: votesAgainst, minds_changed: mindsChanged }
+      })
+    )
+
+    setDebateVote(debateId, side)
+
+    await fetch("/api/debates/vote", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        debate_id: debateId,
+        side,
+        fingerprint: fp,
+        mind_changed: !!mindChanged,
+      }),
+    })
+  }
+
+  async function submitArgument() {
+    if (!argueModal) return
+    if (argueText.trim().length < 20) {
+      setArgueError("Argument must be at least 20 characters.")
+      return
+    }
+    setSubmitting(true)
+    setArgueError("")
+
+    const profile = getProfile()
+    const handle = profile?.archetypeId
+      ? `${profile.archetypeId.replace(/-/g, "_")}`
+      : `entity_${Math.random().toString(36).slice(2, 7)}`
+
+    try {
+      const res = await fetch("/api/debates/argue", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          debate_id: argueModal.debate.id,
+          side: argueModal.side,
+          text: argueText.trim(),
+          anonHandle: handle,
+          archetypeId: profile?.archetypeId,
+        }),
+      })
+      const data = await res.json()
+      if (!res.ok) {
+        setArgueError(data.error || "Submission failed")
+        setSubmitting(false)
+        return
+      }
+      setArgueText("")
+      setArgueModal(null)
+      setSubmitting(false)
+      fetchDebates()
+    } catch {
+      setArgueError("Connection lost. Try again.")
+      setSubmitting(false)
+    }
+  }
+
+  const activeDebate = debates.find(d => d.id === activeId)
 
   return (
     <main className="min-h-screen bg-[#030712] text-[#e2e8f0]">
+      {/* Nav */}
       <nav className="fixed top-0 left-0 right-0 z-40 border-b border-[rgba(99,102,241,0.15)] bg-[rgba(3,7,18,0.9)] backdrop-blur-sm">
         <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-3">
@@ -52,197 +149,284 @@ export default function DebatesPage() {
               AWAKE<span className="text-[#6366f1]">NPC</span>
             </span>
           </Link>
-          <div className="text-xs font-mono text-[#475569] tracking-widest hidden md:block">
-            DEBATE ARENA // STRUCTURED COLLISION OF IDEAS
-          </div>
-          <Link href="/awakening" className="text-xs font-mono px-4 py-2 border border-[#6366f1] text-[#6366f1] hover:bg-[#6366f1] hover:text-white transition-all tracking-wider">
-            INITIALIZE →
-          </Link>
         </div>
       </nav>
 
-      <div className="max-w-6xl mx-auto px-6 pt-24 pb-16">
-
+      <div className="max-w-6xl mx-auto px-6 pt-28 pb-24">
         {/* Header */}
         <div className="mb-12">
           <div className="text-xs font-mono text-[#475569] tracking-widest mb-4">
-            STRUCTURED DEBATE // NOT A FORUM
+            STRUCTURED COLLISION OF IDEAS
           </div>
           <h1 className="text-4xl md:text-5xl font-mono font-bold text-white mb-4">
-            The Debate Arena
+            The Debates
           </h1>
-          <p className="text-[#94a3b8] font-mono text-sm max-w-2xl leading-relaxed">
-            Oxford-style structured argument. The best case for each side rises to the top.
-            One question matters: <span className="text-white">did reading this change your mind?</span>
+          <p className="text-[#94a3b8] font-mono text-base leading-relaxed max-w-2xl">
+            Take a side. Read the strongest arguments. Change your mind if the evidence demands it.
+            Your changed mind is the most valuable signal on this site.
           </p>
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-8">
-
-          {/* Debate selector */}
-          <aside className="lg:w-72 shrink-0">
-            <div className="text-xs font-mono text-[#475569] tracking-widest mb-4">
-              ACTIVE PROPOSITIONS
-            </div>
-            <div className="space-y-3">
-              {DEBATES.map(d => (
-                <button
-                  key={d.id}
-                  onClick={() => setActiveDebate(d)}
-                  className={`w-full text-left p-4 border transition-all font-mono text-xs leading-relaxed ${
-                    activeDebate.id === d.id
-                      ? "border-[rgba(245,158,11,0.5)] bg-[rgba(245,158,11,0.05)] text-white"
-                      : "border-[rgba(99,102,241,0.15)] bg-[#0f1629] text-[#94a3b8] hover:border-[rgba(99,102,241,0.3)]"
-                  }`}
-                >
-                  <div className="text-[#475569] mb-2">PROPOSITION {d.id}</div>
-                  &ldquo;{d.proposition}&rdquo;
-                  <div className="mt-3 flex gap-3 text-[#475569]">
-                    <span>⚡ {d.arguments} args</span>
-                    <span>🔄 {d.changed} changed</span>
-                  </div>
-                </button>
-              ))}
-            </div>
-
-            <button className="w-full mt-4 py-3 border border-dashed border-[rgba(99,102,241,0.2)] text-xs font-mono text-[#475569] hover:border-[#6366f1] hover:text-[#6366f1] transition-all tracking-widest">
-              + PROPOSE DEBATE
-            </button>
-          </aside>
-
-          {/* Active debate */}
-          <div className="flex-1 min-w-0">
-
-            {/* Proposition */}
-            <div
-              className="border border-[rgba(245,158,11,0.3)] bg-[#0f1629] p-8 mb-6"
-              style={{ boxShadow: "0 0 30px rgba(245,158,11,0.05)" }}
-            >
+        {loading ? (
+          <div className="text-center py-24 text-xs font-mono text-[#475569] tracking-widest animate-pulse">
+            LOADING PROPOSITIONS...
+          </div>
+        ) : (
+          <div className="grid lg:grid-cols-[280px_1fr] gap-8">
+            {/* Sidebar list */}
+            <aside className="space-y-2">
               <div className="text-xs font-mono text-[#475569] tracking-widest mb-4">
-                PROPOSITION {activeDebate.id}
+                {debates.length} PROPOSITIONS
               </div>
-              <h2 className="text-xl md:text-2xl font-mono font-bold text-white leading-relaxed mb-8">
-                &ldquo;{activeDebate.proposition}&rdquo;
-              </h2>
-
-              {/* Vote bar */}
-              <div className="mb-6">
-                <div className="flex justify-between text-xs font-mono mb-2">
-                  <span className="text-[#10b981]">FOR — {forPct}%</span>
-                  <span className="text-[#ef4444]">AGAINST — {againstPct}%</span>
-                </div>
-                <div className="h-2 bg-[rgba(239,68,68,0.3)] overflow-hidden">
-                  <div
-                    className="h-full bg-[#10b981] transition-all duration-500"
-                    style={{ width: `${forPct}%` }}
-                  />
-                </div>
-                <div className="text-xs font-mono text-[#475569] mt-2 text-center">
-                  {totalVotes.toLocaleString()} votes cast
-                </div>
-              </div>
-
-              {/* Vote buttons */}
-              <div className="flex gap-4">
-                <button
-                  onClick={() => setUserVote(v => ({ ...v, [activeDebate.id]: "for" }))}
-                  className={`flex-1 py-3 font-mono text-xs tracking-widest border transition-all ${
-                    userVote[activeDebate.id] === "for"
-                      ? "bg-[#10b981] text-white border-[#10b981]"
-                      : "border-[rgba(16,185,129,0.4)] text-[#10b981] hover:bg-[rgba(16,185,129,0.1)]"
-                  }`}
-                >
-                  ▲ I AGREE
-                </button>
-                <button
-                  onClick={() => setUserVote(v => ({ ...v, [activeDebate.id]: "against" }))}
-                  className={`flex-1 py-3 font-mono text-xs tracking-widest border transition-all ${
-                    userVote[activeDebate.id] === "against"
-                      ? "bg-[#ef4444] text-white border-[#ef4444]"
-                      : "border-[rgba(239,68,68,0.4)] text-[#ef4444] hover:bg-[rgba(239,68,68,0.1)]"
-                  }`}
-                >
-                  ▼ I DISAGREE
-                </button>
-              </div>
-            </div>
-
-            {/* Top arguments */}
-            <div className="grid md:grid-cols-2 gap-4 mb-6">
-
-              {/* Best FOR */}
-              <div className="border border-[rgba(16,185,129,0.25)] bg-[#0f1629] p-6">
-                <div className="flex items-center gap-2 mb-4">
-                  <div className="w-2 h-2 rounded-full bg-[#10b981]" />
-                  <span className="text-xs font-mono text-[#10b981] tracking-widest">TOP ARGUMENT FOR</span>
-                </div>
-                <p className="text-[#94a3b8] font-mono text-sm leading-relaxed">
-                  {activeDebate.topFor}
-                </p>
-                <div className="flex items-center gap-4 mt-4 text-xs font-mono text-[#475569]">
-                  <button className="hover:text-[#10b981] transition-colors">▲ STRENGTHEN</button>
-                  <button className="hover:text-[#6366f1] transition-colors">COUNTER →</button>
-                </div>
-              </div>
-
-              {/* Best AGAINST */}
-              <div className="border border-[rgba(239,68,68,0.25)] bg-[#0f1629] p-6">
-                <div className="flex items-center gap-2 mb-4">
-                  <div className="w-2 h-2 rounded-full bg-[#ef4444]" />
-                  <span className="text-xs font-mono text-[#ef4444] tracking-widest">TOP ARGUMENT AGAINST</span>
-                </div>
-                <p className="text-[#94a3b8] font-mono text-sm leading-relaxed">
-                  {activeDebate.topAgainst}
-                </p>
-                <div className="flex items-center gap-4 mt-4 text-xs font-mono text-[#475569]">
-                  <button className="hover:text-[#ef4444] transition-colors">▲ STRENGTHEN</button>
-                  <button className="hover:text-[#6366f1] transition-colors">COUNTER →</button>
-                </div>
-              </div>
-            </div>
-
-            {/* Mind changed? */}
-            <div className="border border-[rgba(99,102,241,0.2)] bg-[#0f1629] p-6">
-              <div className="flex items-center justify-between flex-wrap gap-4">
-                <div>
-                  <div className="text-sm font-mono text-white mb-1">
-                    Did reading this change your mind?
-                  </div>
-                  <div className="text-xs font-mono text-[#475569]">
-                    {activeDebate.changed} people changed their vote after reading the arguments
-                  </div>
-                </div>
-                <div className="flex gap-3">
+              {debates.map(d => {
+                const total = d.votes_for + d.votes_against
+                const forPct = total > 0 ? Math.round((d.votes_for / total) * 100) : 50
+                return (
                   <button
-                    onClick={() => setMindChanged(m => ({ ...m, [activeDebate.id]: true }))}
-                    className={`px-5 py-2 font-mono text-xs tracking-widest border transition-all ${
-                      mindChanged[activeDebate.id]
-                        ? "bg-[#6366f1] text-white border-[#6366f1]"
-                        : "border-[rgba(99,102,241,0.4)] text-[#6366f1] hover:bg-[rgba(99,102,241,0.1)]"
+                    key={d.id}
+                    onClick={() => setActiveId(d.id)}
+                    className={`w-full text-left p-4 border transition-all ${
+                      activeId === d.id
+                        ? "border-[#6366f1] bg-[rgba(99,102,241,0.05)]"
+                        : "border-[rgba(99,102,241,0.15)] bg-[#0a0f1e] hover:border-[rgba(99,102,241,0.3)]"
                     }`}
                   >
-                    YES — I SHIFTED
+                    <p className="text-sm font-mono text-[#e2e8f0] leading-snug mb-2 line-clamp-3">
+                      {d.proposition}
+                    </p>
+                    <div className="flex items-center gap-2 text-[10px] font-mono text-[#475569]">
+                      <span className="text-[#10b981]">{forPct}%</span>
+                      <span>·</span>
+                      <span>{total.toLocaleString()} votes</span>
+                    </div>
                   </button>
-                  <button className="px-5 py-2 font-mono text-xs tracking-widest border border-[rgba(99,102,241,0.2)] text-[#475569] hover:text-[#94a3b8] transition-all">
-                    HOLDING POSITION
-                  </button>
+                )
+              })}
+            </aside>
+
+            {/* Active debate */}
+            {activeDebate ? (
+              <div>
+                {/* Proposition */}
+                <div className="mb-8 pb-8 border-b border-[rgba(99,102,241,0.15)]">
+                  <div className="text-xs font-mono text-[#475569] tracking-widest mb-3">
+                    PROPOSITION
+                  </div>
+                  <h2 className="text-2xl md:text-3xl font-mono font-bold text-white leading-snug">
+                    {activeDebate.proposition}
+                  </h2>
+                </div>
+
+                {/* Vote bar */}
+                {(() => {
+                  const total = activeDebate.votes_for + activeDebate.votes_against
+                  const forPct = total > 0 ? (activeDebate.votes_for / total) * 100 : 50
+                  const myVote = voteState[activeDebate.id]
+                  return (
+                    <div className="mb-8">
+                      <div className="flex items-center justify-between mb-3 text-xs font-mono">
+                        <span className="text-[#10b981]">FOR · {Math.round(forPct)}%</span>
+                        <span className="text-[#475569]">
+                          {total.toLocaleString()} votes · {activeDebate.minds_changed} minds changed
+                        </span>
+                        <span className="text-[#ef4444]">{Math.round(100 - forPct)}% · AGAINST</span>
+                      </div>
+                      <div className="h-2 bg-[#0a0f1e] flex">
+                        <div
+                          className="bg-[#10b981] transition-all"
+                          style={{ width: `${forPct}%` }}
+                        />
+                        <div
+                          className="bg-[#ef4444] transition-all"
+                          style={{ width: `${100 - forPct}%` }}
+                        />
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-3 mt-6">
+                        <button
+                          onClick={() => vote(activeDebate.id, "FOR")}
+                          className={`px-6 py-4 border font-mono text-xs tracking-widest transition-all ${
+                            myVote === "FOR"
+                              ? "border-[#10b981] bg-[rgba(16,185,129,0.15)] text-[#10b981]"
+                              : "border-[rgba(16,185,129,0.3)] text-[#10b981] hover:bg-[rgba(16,185,129,0.05)]"
+                          }`}
+                        >
+                          {myVote === "FOR" ? "✓ VOTED FOR" : "VOTE FOR"}
+                        </button>
+                        <button
+                          onClick={() => vote(activeDebate.id, "AGAINST")}
+                          className={`px-6 py-4 border font-mono text-xs tracking-widest transition-all ${
+                            myVote === "AGAINST"
+                              ? "border-[#ef4444] bg-[rgba(239,68,68,0.15)] text-[#ef4444]"
+                              : "border-[rgba(239,68,68,0.3)] text-[#ef4444] hover:bg-[rgba(239,68,68,0.05)]"
+                          }`}
+                        >
+                          {myVote === "AGAINST" ? "✓ VOTED AGAINST" : "VOTE AGAINST"}
+                        </button>
+                      </div>
+                    </div>
+                  )
+                })()}
+
+                {/* Arguments columns */}
+                <div className="grid md:grid-cols-2 gap-6 mb-8">
+                  {/* FOR */}
+                  <div>
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="text-xs font-mono text-[#10b981] tracking-widest">
+                        ▸ TOP FOR
+                      </div>
+                      <button
+                        onClick={() => setArgueModal({ debate: activeDebate, side: "FOR" })}
+                        className="text-[10px] font-mono text-[#475569] hover:text-[#10b981] tracking-widest"
+                      >
+                        + ADD ARGUMENT
+                      </button>
+                    </div>
+                    {activeDebate.arguments_for.length === 0 ? (
+                      <div className="border border-[rgba(16,185,129,0.15)] bg-[#0a0f1e] p-6 text-center text-xs font-mono text-[#475569]">
+                        No arguments yet. Be the first.
+                      </div>
+                    ) : (
+                      <div className="space-y-3">
+                        {activeDebate.arguments_for.map(a => (
+                          <article
+                            key={a.id}
+                            className="border border-[rgba(16,185,129,0.2)] bg-[rgba(16,185,129,0.03)] p-5"
+                          >
+                            <p className="text-sm font-mono text-[#e2e8f0] leading-relaxed mb-3">
+                              {a.text}
+                            </p>
+                            <div className="flex items-center justify-between text-[10px] font-mono text-[#475569] tracking-widest">
+                              <span>
+                                by <span className="text-[#94a3b8]">{a.anon_handle}</span>
+                              </span>
+                              <span className="text-[#10b981]">▲ {a.upvotes}</span>
+                            </div>
+                          </article>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* AGAINST */}
+                  <div>
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="text-xs font-mono text-[#ef4444] tracking-widest">
+                        ▸ TOP AGAINST
+                      </div>
+                      <button
+                        onClick={() => setArgueModal({ debate: activeDebate, side: "AGAINST" })}
+                        className="text-[10px] font-mono text-[#475569] hover:text-[#ef4444] tracking-widest"
+                      >
+                        + ADD ARGUMENT
+                      </button>
+                    </div>
+                    {activeDebate.arguments_against.length === 0 ? (
+                      <div className="border border-[rgba(239,68,68,0.15)] bg-[#0a0f1e] p-6 text-center text-xs font-mono text-[#475569]">
+                        No arguments yet. Be the first.
+                      </div>
+                    ) : (
+                      <div className="space-y-3">
+                        {activeDebate.arguments_against.map(a => (
+                          <article
+                            key={a.id}
+                            className="border border-[rgba(239,68,68,0.2)] bg-[rgba(239,68,68,0.03)] p-5"
+                          >
+                            <p className="text-sm font-mono text-[#e2e8f0] leading-relaxed mb-3">
+                              {a.text}
+                            </p>
+                            <div className="flex items-center justify-between text-[10px] font-mono text-[#475569] tracking-widest">
+                              <span>
+                                by <span className="text-[#94a3b8]">{a.anon_handle}</span>
+                              </span>
+                              <span className="text-[#ef4444]">▲ {a.upvotes}</span>
+                            </div>
+                          </article>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
+            ) : null}
+          </div>
+        )}
+      </div>
 
-            {/* Post argument */}
-            <div className="mt-6 border border-dashed border-[rgba(99,102,241,0.2)] p-6 text-center">
-              <p className="text-xs font-mono text-[#475569] mb-3">
-                Have a stronger argument? Post it. If the community votes it to the top, it becomes the featured argument.
-              </p>
-              <button className="px-6 py-3 border border-[rgba(99,102,241,0.3)] text-[#6366f1] font-mono text-xs tracking-widest hover:bg-[rgba(99,102,241,0.1)] transition-all">
-                POST AN ARGUMENT
+      {/* Argue modal */}
+      {argueModal && (
+        <div
+          className="fixed inset-0 z-50 bg-[rgba(3,7,18,0.95)] backdrop-blur-sm flex items-center justify-center p-6"
+          onClick={() => setArgueModal(null)}
+        >
+          <div
+            className="bg-[#0a0f1e] border max-w-2xl w-full p-8"
+            onClick={e => e.stopPropagation()}
+            style={{
+              borderColor: argueModal.side === "FOR" ? "rgba(16,185,129,0.4)" : "rgba(239,68,68,0.4)",
+              boxShadow: `0 0 50px ${argueModal.side === "FOR" ? "rgba(16,185,129,0.2)" : "rgba(239,68,68,0.2)"}`,
+            }}
+          >
+            <div className="flex items-center justify-between mb-6">
+              <div>
+                <div
+                  className="text-xs font-mono tracking-widest mb-1"
+                  style={{ color: argueModal.side === "FOR" ? "#10b981" : "#ef4444" }}
+                >
+                  ARGUE {argueModal.side}
+                </div>
+                <h2 className="text-base font-mono font-bold text-white leading-snug">
+                  {argueModal.debate.proposition}
+                </h2>
+              </div>
+              <button
+                onClick={() => setArgueModal(null)}
+                className="text-2xl text-[#475569] hover:text-white"
+              >
+                ×
               </button>
             </div>
 
+            <textarea
+              value={argueText}
+              onChange={e => setArgueText(e.target.value)}
+              maxLength={2000}
+              rows={8}
+              placeholder="State your strongest case. Be precise. Avoid personal attacks. The argument either holds or it doesn't."
+              className="w-full bg-[#030712] border border-[rgba(99,102,241,0.3)] px-4 py-3 text-sm font-mono text-[#e2e8f0] placeholder-[#475569] focus:outline-none focus:border-[#6366f1] resize-none mb-2"
+            />
+            <div className="flex justify-between text-[10px] font-mono text-[#475569] mb-4">
+              <span>MIN 20 CHARS</span>
+              <span>{argueText.length} / 2000</span>
+            </div>
+
+            {argueError && (
+              <div className="text-xs font-mono text-[#ef4444] mb-4">{argueError}</div>
+            )}
+
+            <div className="flex gap-3">
+              <button
+                onClick={submitArgument}
+                disabled={submitting}
+                className="flex-1 px-6 py-3 text-white font-mono text-xs tracking-widest transition-all disabled:opacity-50"
+                style={{
+                  backgroundColor: argueModal.side === "FOR" ? "#10b981" : "#ef4444",
+                  boxShadow: `0 0 20px ${argueModal.side === "FOR" ? "rgba(16,185,129,0.3)" : "rgba(239,68,68,0.3)"}`,
+                }}
+              >
+                {submitting ? "TRANSMITTING..." : `SUBMIT ${argueModal.side} ARGUMENT →`}
+              </button>
+              <button
+                onClick={() => setArgueModal(null)}
+                className="px-6 py-3 border border-[rgba(99,102,241,0.2)] text-[#475569] font-mono text-xs tracking-widest hover:text-[#94a3b8]"
+              >
+                CANCEL
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </main>
   )
 }

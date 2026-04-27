@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import Link from "next/link"
 import { POSTS } from "./papers/posts"
 import SubscribeForm from "@/components/SubscribeForm"
+import HomeGlitchFeed from "@/components/HomeGlitchFeed"
 
 const BOOT_LINES = [
   "> SIMULATION RUNTIME v7.4.1 — INITIALIZING...",
@@ -447,62 +448,7 @@ export default function HomePage() {
               </Link>
             </div>
 
-            <div className="space-y-3">
-              {[
-                {
-                  id: "GLT-7291",
-                  user: "void_walker_9",
-                  level: "AWAKE NPC",
-                  type: "SYNCHRONICITY",
-                  text: "Thought about a specific forgotten song from 1994 for the first time in years. 20 minutes later it played in a coffee shop I'd never been to. The barista said they never play music from that era.",
-                  upvotes: 847,
-                  color: "#10b981",
-                },
-                {
-                  id: "GLT-7290",
-                  user: "pattern_seeker",
-                  level: "GLITCHING",
-                  type: "DÉJÀ VU",
-                  text: "The entire conversation I had today at 3pm with a stranger — I had lived it before. Not in a dream. In what felt like a memory from a timeline that doesn't exist.",
-                  upvotes: 412,
-                  color: "#3b82f6",
-                },
-                {
-                  id: "GLT-7289",
-                  user: "null_pointer_ex",
-                  level: "LOADING",
-                  type: "ANOMALY",
-                  text: "Same sequence of numbers: 7-3-9. My apartment. My childhood home. The hospital room where I was born. Found them all in the same week without looking.",
-                  upvotes: 623,
-                  color: "#8b5cf6",
-                },
-              ].map((glitch) => (
-                <div key={glitch.id} className="sim-card p-5 flex gap-4 items-start">
-                  <div className="hidden md:flex flex-col items-center gap-1 min-w-[50px]">
-                    <div className="text-[#6366f1] font-mono text-lg font-bold">▲</div>
-                    <div className="text-white font-mono text-sm font-bold">{glitch.upvotes}</div>
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex flex-wrap items-center gap-3 mb-2">
-                      <span className="text-xs font-mono text-[#475569]">{glitch.id}</span>
-                      <span
-                        className="text-xs font-mono px-2 py-0.5 border"
-                        style={{ color: glitch.color, borderColor: `${glitch.color}40` }}
-                      >
-                        {glitch.type}
-                      </span>
-                      <span className="text-xs font-mono text-[#475569]">
-                        by <span className="text-[#94a3b8]">{glitch.user}</span>
-                      </span>
-                      <span className="text-xs font-mono text-[#475569]">
-                        [<span style={{ color: glitch.color }}>{glitch.level}</span>]
-                      </span>
-                    </div>
-                    <p className="text-[#94a3b8] text-sm font-mono leading-relaxed">{glitch.text}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
+            <HomeGlitchFeed />
 
             <div className="mt-6 text-center">
               <Link
