@@ -138,6 +138,17 @@ export default function DebatesPage() {
 
   const activeDebate = debates.find(d => d.id === activeId)
 
+  function selectDebate(id: number) {
+    setActiveId(id)
+    // On mobile, scroll the active debate view into view
+    setTimeout(() => {
+      const el = document.getElementById("active-debate")
+      if (el && window.innerWidth < 1024) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" })
+      }
+    }, 50)
+  }
+
   return (
     <main className="min-h-screen bg-[#030712] text-[#e2e8f0]">
       {/* Nav */}
@@ -174,7 +185,7 @@ export default function DebatesPage() {
         ) : (
           <div className="grid lg:grid-cols-[280px_1fr] gap-8">
             {/* Sidebar list */}
-            <aside className="space-y-2">
+            <aside className="space-y-2 order-2 lg:order-1">
               <div className="text-xs font-mono text-[#475569] tracking-widest mb-4">
                 {debates.length} PROPOSITIONS
               </div>
@@ -184,7 +195,7 @@ export default function DebatesPage() {
                 return (
                   <button
                     key={d.id}
-                    onClick={() => setActiveId(d.id)}
+                    onClick={() => selectDebate(d.id)}
                     className={`w-full text-left p-4 border transition-all ${
                       activeId === d.id
                         ? "border-[#6366f1] bg-[rgba(99,102,241,0.05)]"
@@ -206,7 +217,7 @@ export default function DebatesPage() {
 
             {/* Active debate */}
             {activeDebate ? (
-              <div>
+              <div id="active-debate" className="scroll-mt-20 order-1 lg:order-2">
                 {/* Proposition */}
                 <div className="mb-8 pb-8 border-b border-[rgba(99,102,241,0.15)]">
                   <div className="text-xs font-mono text-[#475569] tracking-widest mb-3">
