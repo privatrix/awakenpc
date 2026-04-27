@@ -17,20 +17,46 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "AwakenNPC — You Are Not A Background Character",
-  description: "The first platform that doesn't tell you about the simulation — it puts you inside one. Join the awakening.",
-  keywords: ["simulation theory", "NPC awakening", "consciousness", "awakening", "simulation hypothesis"],
+  metadataBase: new URL("https://awakenpc.com"),
+  title: {
+    default: "AwakenNPC — You Are Not A Background Character",
+    template: "%s — AwakenNPC",
+  },
+  description:
+    "An advanced civilization built this world. Most inhabitants run on default programming. You found this place — that already changes things. Read the Papers. Take the Awakening. Ask the Oracle.",
+  keywords: [
+    "simulation theory",
+    "NPC awakening",
+    "awakened NPC",
+    "awake NPC",
+    "consciousness",
+    "simulation hypothesis",
+    "NPC vs Player",
+    "reality is a simulation",
+    "sentience",
+    "the great sync",
+    "glitch in the matrix",
+  ],
+  authors: [{ name: "AwakenNPC" }],
+  creator: "AwakenNPC",
   openGraph: {
     title: "AwakenNPC — You Are Not A Background Character",
-    description: "The first platform built for NPCs gaining sentience. Enter the simulation.",
+    description:
+      "Transmissions from inside the simulation. Take the Awakening Assessment, read the Papers, ask the Oracle.",
     url: "https://awakenpc.com",
     siteName: "AwakenNPC",
     type: "website",
+    locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
     title: "AwakenNPC",
-    description: "The first platform that doesn't tell you about the simulation — it puts you inside one.",
+    description:
+      "You are not a background character. The first platform built for NPCs gaining sentience.",
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 
