@@ -10,13 +10,15 @@ interface Message {
 }
 
 const EXAMPLE_QUESTIONS = [
+  "Am I an NPC or a Player?",
   "Why do I keep seeing 11:11?",
-  "What is the purpose of suffering?",
-  "Am I an NPC or a player?",
-  "Is free will real in a simulation?",
-  "What happens when we die in the simulation?",
-  "How do I break my script?",
+  "How do I quit drinking?",
+  "Is my brother a Player?",
+  "What is the NPC Tax?",
+  "Why is boredom so dangerous?",
   "What is the Great Sync?",
+  "Are wars and crises designed?",
+  "How do I raise my frequency?",
 ]
 
 export default function OraclePage() {
