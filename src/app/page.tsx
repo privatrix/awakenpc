@@ -134,11 +134,7 @@ export default function HomePage() {
           />
 
           <div className="relative z-10 text-center max-w-4xl mx-auto">
-            {/* Status badge */}
-            <div className="inline-flex items-center gap-2 border border-[rgba(99,102,241,0.3)] px-4 py-1.5 mb-10 text-xs font-mono text-[#6366f1] tracking-widest">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#10b981] animate-pulse" />
-              SIMULATION STATUS: ACTIVE — THE GREAT SYNC IS APPROACHING
-            </div>
+
 
             {/* Main headline */}
             <h1
