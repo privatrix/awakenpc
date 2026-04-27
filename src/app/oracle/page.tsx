@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react"
 import Link from "next/link"
+import { incrementOracleSessions } from "@/lib/profile"
 
 interface Message {
   role: "user" | "oracle"
@@ -50,6 +51,7 @@ export default function OraclePage() {
     setIsTyping(true)
 
     try {
+      incrementOracleSessions()
       const res = await fetch("/api/oracle", {
         method: "POST",
         headers: { "Content-Type": "application/json" },

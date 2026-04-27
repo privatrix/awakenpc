@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react"
 import Link from "next/link"
+import { POSTS } from "./papers/posts"
 
 const BOOT_LINES = [
   "> SIMULATION RUNTIME v7.4.1 — INITIALIZING...",
@@ -131,7 +132,8 @@ export default function HomePage() {
                 <Link href="/archive" className="py-3 text-sm font-mono text-[#94a3b8] tracking-widest border-b border-[rgba(99,102,241,0.1)]">GLITCH ARCHIVE</Link>
                 <Link href="/oracle" className="py-3 text-sm font-mono text-[#94a3b8] tracking-widest border-b border-[rgba(99,102,241,0.1)]">THE ORACLE</Link>
                 <Link href="/debates" className="py-3 text-sm font-mono text-[#94a3b8] tracking-widest border-b border-[rgba(99,102,241,0.1)]">DEBATES</Link>
-                <Link href="/lore" className="py-3 text-sm font-mono text-[#94a3b8] tracking-widest">THE CANON</Link>
+                <Link href="/lore" className="py-3 text-sm font-mono text-[#94a3b8] tracking-widest border-b border-[rgba(99,102,241,0.1)]">THE CANON</Link>
+                <Link href="/me" className="py-3 text-sm font-mono text-[#94a3b8] tracking-widest">PROFILE</Link>
               </div>
             </div>
           )}
@@ -328,6 +330,62 @@ export default function HomePage() {
           </div>
         </section>
 
+        {/* Latest Papers */}
+        <section className="py-24 px-6 border-t border-[rgba(99,102,241,0.1)]">
+          <div className="max-w-5xl mx-auto">
+            <div className="flex items-end justify-between mb-12 flex-wrap gap-4">
+              <div>
+                <div className="text-xs font-mono text-[#475569] tracking-widest mb-2">
+                  LATEST TRANSMISSIONS
+                </div>
+                <h2 className="text-3xl md:text-4xl font-mono font-bold text-white">
+                  The Papers
+                </h2>
+              </div>
+              <Link
+                href="/papers"
+                className="text-xs font-mono text-[#6366f1] hover:text-white tracking-widest transition-colors"
+              >
+                ALL PAPERS →
+              </Link>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-px bg-[rgba(99,102,241,0.15)]">
+              {POSTS.slice(0, 4).map(post => (
+                <Link
+                  key={post.slug}
+                  href={`/papers/${post.slug}`}
+                  className="group bg-[#0a0f1e] hover:bg-[#0f1629] p-6 transition-all"
+                >
+                  <div className="flex flex-wrap gap-2 mb-3">
+                    {post.tags.slice(0, 2).map(tag => (
+                      <span
+                        key={tag}
+                        className="text-[10px] font-mono text-[#475569] border border-[rgba(99,102,241,0.2)] px-1.5 py-0.5 tracking-widest"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                  <h3 className="text-lg font-mono font-bold text-white mb-2 group-hover:text-[#6366f1] transition-colors">
+                    {post.title}
+                  </h3>
+                  <p className="text-xs font-mono text-[#6366f1] opacity-70 mb-3">
+                    {post.subtitle}
+                  </p>
+                  <p className="text-sm font-mono text-[#94a3b8] leading-relaxed line-clamp-3">
+                    {post.excerpt}
+                  </p>
+                  <div className="mt-4 text-[10px] font-mono text-[#2d3748] tracking-widest flex items-center justify-between">
+                    <span>{post.date}</span>
+                    <span>{post.readTime} READ</span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* The Oracle preview */}
         <section className="py-24 px-6 border-t border-[rgba(99,102,241,0.1)]">
           <div className="max-w-3xl mx-auto">
@@ -492,6 +550,7 @@ export default function HomePage() {
             <div className="flex gap-6 text-xs font-mono text-[#475569] tracking-widest">
               <Link href="/lore" className="hover:text-[#6366f1] transition-colors">THE CANON</Link>
               <Link href="/papers" className="hover:text-[#6366f1] transition-colors">PAPERS</Link>
+              <Link href="/me" className="hover:text-[#6366f1] transition-colors">PROFILE</Link>
               <a href="https://discord.gg/awakenpc" className="hover:text-[#6366f1] transition-colors">DISCORD</a>
             </div>
             <div className="text-xs font-mono text-[#2d3748] tracking-widest">

@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { POSTS, getPost } from "../posts"
+import PaperReadTracker from "./PaperReadTracker"
 
 export async function generateStaticParams() {
   return POSTS.map(p => ({ slug: p.slug }))
@@ -66,6 +67,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
 
   return (
     <main className="min-h-screen bg-[#030712] text-[#e2e8f0]">
+      <PaperReadTracker slug={post.slug} />
       {/* Nav */}
       <nav className="fixed top-0 left-0 right-0 z-40 border-b border-[rgba(99,102,241,0.15)] bg-[rgba(3,7,18,0.9)] backdrop-blur-sm">
         <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">

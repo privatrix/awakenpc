@@ -3,6 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import { ARCHETYPES, scoreToArchetype, type Archetype } from "@/lib/archetypes"
+import { saveProfile } from "@/lib/profile"
 
 const QUESTIONS = [
   {
@@ -126,7 +127,15 @@ export default function AwakeningPage() {
     setTimeout(() => {
       const newScores = [...scores, score]
       if (current + 1 >= QUESTIONS.length) {
-        setArchetype(scoreToArchetype(newScores))
+        const archetype = scoreToArchetype(newScores)
+        setArchetype(archetype)
+        // Persist to localStorage
+        saveProfile({
+          archetypeId: archetype.id,
+          level: archetype.level,
+          scores: newScores,
+          takenAt: new Date().toISOString(),
+        })
         setPhase("result")
       } else {
         setCurrent(current + 1)
