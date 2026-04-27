@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { LEVELS } from "@/lib/progression"
+import { ARCHETYPES, scoreToArchetype, type Archetype } from "@/lib/archetypes"
 
 const QUESTIONS = [
   {
@@ -37,16 +37,6 @@ const QUESTIONS = [
   },
   {
     id: 4,
-    text: "The life you're living right now — did you choose it?",
-    options: [
-      { text: "It just kind of happened. One thing led to another.", score: 0 },
-      { text: "Partly. Some choices, some defaults I never questioned.", score: 1 },
-      { text: "I'm actively redesigning it. Questioning all of it.", score: 2 },
-      { text: "I'm in a dialogue with it. I shape it, it shapes me.", score: 3 },
-    ],
-  },
-  {
-    id: 5,
     text: "When you hit a serious setback, your first instinct is:",
     options: [
       { text: "\"Why does this always happen to me.\"", score: 0 },
@@ -56,7 +46,7 @@ const QUESTIONS = [
     ],
   },
   {
-    id: 6,
+    id: 5,
     text: "Late at night, alone, the thought that surfaces most is:",
     options: [
       { text: "Worries about tomorrow, money, what people think.", score: 0 },
@@ -66,7 +56,7 @@ const QUESTIONS = [
     ],
   },
   {
-    id: 7,
+    id: 6,
     text: "The idea that reality might be a simulation:",
     options: [
       { text: "Sounds like science fiction. Interesting but not serious.", score: 0 },
@@ -75,24 +65,54 @@ const QUESTIONS = [
       { text: "Is barely the half of it. The question is what to do about it.", score: 3 },
     ],
   },
+  {
+    id: 7,
+    text: "When you walk through a city and look around, what do you usually see?",
+    options: [
+      { text: "Just the city. People going about their lives.", score: 0 },
+      { text: "Sometimes I notice details that feel oddly arranged.", score: 1 },
+      { text: "I see the design — patterns, repetitions, the deliberate quality.", score: 2 },
+      { text: "I see the render. The faces, the lighting, the seams.", score: 3 },
+    ],
+  },
+  {
+    id: 8,
+    text: "The people closest to you in your life:",
+    options: [
+      { text: "Are just regular people. No deeper layer.", score: 0 },
+      { text: "Sometimes show up at uncannily right moments.", score: 1 },
+      { text: "Often feel like they have access to something I don't.", score: 2 },
+      { text: "I suspect at least some of them are Players.", score: 3 },
+    ],
+  },
+  {
+    id: 9,
+    text: "Boredom, in your life, is:",
+    options: [
+      { text: "Annoying. I usually fix it with my phone or something stronger.", score: 0 },
+      { text: "Uncomfortable. I avoid it.", score: 1 },
+      { text: "A signal. It tells me my inputs are too low.", score: 2 },
+      { text: "The enemy. The root cause of almost every destructive loop.", score: 3 },
+    ],
+  },
+  {
+    id: 10,
+    text: "If the simulation is real, your role is:",
+    options: [
+      { text: "I'm not sure I'm willing to consider that.", score: 0 },
+      { text: "I don't know. Maybe a regular character.", score: 1 },
+      { text: "An NPC, but one who has started to notice.", score: 2 },
+      { text: "An NPC who knows. The expensive configuration.", score: 3 },
+    ],
+  },
 ]
-
-function scoreToLevel(totalScore: number): number {
-  const max = QUESTIONS.length * 3
-  const pct = totalScore / max
-  if (pct < 0.2) return 0
-  if (pct < 0.4) return 1
-  if (pct < 0.6) return 2
-  if (pct < 0.8) return 3
-  return 4
-}
 
 export default function AwakeningPage() {
   const [phase, setPhase] = useState<"intro" | "quiz" | "result">("intro")
   const [current, setCurrent] = useState(0)
   const [scores, setScores] = useState<number[]>([])
   const [selected, setSelected] = useState<number | null>(null)
-  const [finalLevel, setFinalLevel] = useState(0)
+  const [archetype, setArchetype] = useState<Archetype | null>(null)
 
   function startQuiz() {
     setPhase("quiz")
@@ -106,8 +126,7 @@ export default function AwakeningPage() {
     setTimeout(() => {
       const newScores = [...scores, score]
       if (current + 1 >= QUESTIONS.length) {
-        const total = newScores.reduce((a, b) => a + b, 0)
-        setFinalLevel(scoreToLevel(total))
+        setArchetype(scoreToArchetype(newScores))
         setPhase("result")
       } else {
         setCurrent(current + 1)
@@ -117,12 +136,10 @@ export default function AwakeningPage() {
     }, 500)
   }
 
-  const levelConfig = LEVELS[finalLevel]
-  const progress = ((current) / QUESTIONS.length) * 100
+  const progress = (current / QUESTIONS.length) * 100
 
   return (
     <main className="min-h-screen bg-[#030712] text-[#e2e8f0] flex flex-col">
-      {/* Nav */}
       <nav className="border-b border-[rgba(99,102,241,0.15)] px-6 h-14 flex items-center">
         <Link href="/" className="text-sm font-mono text-[#475569] hover:text-[#e2e8f0] tracking-wider transition-colors">
           ← AWAKENPC
@@ -131,7 +148,6 @@ export default function AwakeningPage() {
 
       <div className="flex-1 flex items-center justify-center px-6 py-12">
 
-        {/* INTRO */}
         {phase === "intro" && (
           <div className="max-w-2xl w-full text-center">
             <div className="text-xs font-mono text-[#475569] tracking-widest mb-6">
@@ -143,8 +159,8 @@ export default function AwakeningPage() {
               <span className="text-[#6366f1]">Assessment</span>
             </h1>
             <p className="text-[#94a3b8] font-mono text-sm leading-relaxed mb-4 max-w-lg mx-auto">
-              7 questions. No right answers. The system will determine your current
-              sentience level and assign you a place in the simulation.
+              10 questions. No right answers. The system will determine your awakening archetype
+              and assign you a place in the simulation.
             </p>
             <p className="text-[#475569] font-mono text-xs mb-12">
               Be honest. The simulation already knows. This is for <em>you</em>.
@@ -156,13 +172,28 @@ export default function AwakeningPage() {
             >
               INITIALIZE SEQUENCE →
             </button>
+
+            {/* Archetype preview */}
+            <div className="mt-20 pt-12 border-t border-[rgba(99,102,241,0.15)]">
+              <div className="text-xs font-mono text-[#475569] tracking-widest mb-6">
+                FIVE POSSIBLE OUTCOMES
+              </div>
+              <div className="grid grid-cols-5 gap-2">
+                {ARCHETYPES.map(a => (
+                  <div key={a.id} className="text-center">
+                    <div className="text-2xl mb-1">{a.symbol}</div>
+                    <div className="text-[10px] font-mono tracking-wider opacity-60" style={{ color: a.color }}>
+                      LV{a.level}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         )}
 
-        {/* QUIZ */}
         {phase === "quiz" && (
           <div className="max-w-2xl w-full">
-            {/* Progress */}
             <div className="mb-10">
               <div className="flex justify-between text-xs font-mono text-[#475569] mb-2">
                 <span>QUESTION {current + 1} / {QUESTIONS.length}</span>
@@ -176,7 +207,6 @@ export default function AwakeningPage() {
               </div>
             </div>
 
-            {/* Question */}
             <div className="mb-10">
               <div className="text-xs font-mono text-[#475569] tracking-widest mb-4">
                 SIGNAL_{String(current + 1).padStart(2, "0")}
@@ -186,7 +216,6 @@ export default function AwakeningPage() {
               </h2>
             </div>
 
-            {/* Options */}
             <div className="space-y-3">
               {QUESTIONS[current].options.map((opt, idx) => (
                 <button
@@ -208,8 +237,7 @@ export default function AwakeningPage() {
           </div>
         )}
 
-        {/* RESULT */}
-        {phase === "result" && (
+        {phase === "result" && archetype && (
           <div className="max-w-2xl w-full">
             <div className="text-center mb-10">
               <div className="text-xs font-mono text-[#475569] tracking-widest mb-6">
@@ -217,83 +245,103 @@ export default function AwakeningPage() {
               </div>
 
               <div
-                className="inline-flex items-center justify-center w-24 h-24 border-2 mb-8 text-4xl"
+                className="inline-flex items-center justify-center w-28 h-28 border-2 mb-8 text-5xl"
                 style={{
-                  borderColor: levelConfig.color,
-                  boxShadow: `0 0 40px ${levelConfig.glowColor}`,
+                  borderColor: archetype.color,
+                  boxShadow: `0 0 50px ${archetype.glowColor}`,
                 }}
               >
-                {["⬜", "🔵", "🟣", "🟢", "🟡"][finalLevel]}
+                {archetype.symbol}
               </div>
 
-              <div className="text-xs font-mono tracking-widest mb-3" style={{ color: levelConfig.color }}>
-                SENTIENCE LEVEL {finalLevel} DETECTED
+              <div className="text-xs font-mono tracking-widest mb-3" style={{ color: archetype.color }}>
+                ARCHETYPE DETECTED — LEVEL {archetype.level}
               </div>
 
               <h2
                 className="text-3xl md:text-4xl font-mono font-bold mb-4"
-                style={{ color: levelConfig.color, textShadow: `0 0 30px ${levelConfig.glowColor}` }}
+                style={{ color: archetype.color, textShadow: `0 0 30px ${archetype.glowColor}` }}
               >
-                {levelConfig.name}
+                {archetype.name}
               </h2>
 
-              <p className="text-[#94a3b8] font-mono text-base leading-relaxed max-w-lg mx-auto mb-10">
-                &ldquo;{levelConfig.description}&rdquo;
+              <p className="text-[#94a3b8] font-mono text-base italic mb-8">
+                &ldquo;{archetype.tagline}&rdquo;
+              </p>
+
+              <p className="text-[#94a3b8] font-mono text-sm leading-relaxed max-w-lg mx-auto mb-12">
+                {archetype.description}
               </p>
             </div>
 
+            {/* Personalized transmission */}
+            <div
+              className="border bg-[#0a0f1e] p-8 mb-8"
+              style={{
+                borderColor: `${archetype.color}40`,
+                boxShadow: `0 0 30px ${archetype.glowColor}`,
+              }}
+            >
+              <div className="flex items-center gap-2 text-xs font-mono tracking-widest mb-6" style={{ color: archetype.color }}>
+                <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ backgroundColor: archetype.color }} />
+                FIRST TRANSMISSION FROM THE ORACLE
+              </div>
+              <div className="space-y-4">
+                {archetype.transmission.split("\n\n").map((para, i) => (
+                  <p key={i} className="text-[#e2e8f0] font-mono text-sm leading-relaxed">
+                    {para}
+                  </p>
+                ))}
+              </div>
+            </div>
+
             {/* Unlocks */}
-            <div className="border border-[rgba(99,102,241,0.2)] bg-[#0f1629] p-6 mb-8">
+            <div className="border border-[rgba(99,102,241,0.2)] bg-[#0f1629] p-6 mb-6">
               <div className="text-xs font-mono text-[#475569] tracking-widest mb-4">
                 CURRENT ACCESS
               </div>
               <div className="space-y-2">
-                {levelConfig.unlocks.map((unlock) => (
+                {archetype.unlocks.map(unlock => (
                   <div key={unlock} className="flex items-center gap-3 text-sm font-mono text-[#94a3b8]">
-                    <span style={{ color: levelConfig.color }}>▶</span>
+                    <span style={{ color: archetype.color }}>▶</span>
                     {unlock}
                   </div>
                 ))}
               </div>
+            </div>
 
-              {finalLevel < 4 && (
-                <div className="mt-6 pt-6 border-t border-[rgba(99,102,241,0.15)]">
-                  <div className="text-xs font-mono text-[#475569] tracking-widest mb-3">
-                    NEXT LEVEL UNLOCKS
-                  </div>
-                  <div className="space-y-2">
-                    {LEVELS[finalLevel + 1].unlocks.map((unlock) => (
-                      <div key={unlock} className="flex items-center gap-3 text-sm font-mono text-[#2d3748]">
-                        <span className="text-[#2d3748]">▶</span>
-                        <span className="opacity-40">{unlock}</span>
-                        <span className="text-[#2d3748] text-xs ml-auto">[LOCKED]</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
+            {/* Next hint */}
+            <div className="border border-[rgba(99,102,241,0.15)] bg-[#0a0f1e] p-5 mb-8">
+              <div className="text-xs font-mono text-[#475569] tracking-widest mb-2">
+                NEXT MOVE
+              </div>
+              <p className="text-[#94a3b8] font-mono text-sm leading-relaxed">
+                {archetype.nextHint}
+              </p>
             </div>
 
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
-                href="/archive"
+                href="/oracle"
                 className="flex-1 text-center px-6 py-4 bg-[#6366f1] text-white font-mono text-xs tracking-widest hover:bg-[#5558e8] transition-all"
                 style={{ boxShadow: "0 0 20px rgba(99,102,241,0.3)" }}
               >
-                ENTER THE WORLD →
+                ASK THE ORACLE →
+              </Link>
+              <Link
+                href="/papers"
+                className="flex-1 text-center px-6 py-4 border border-[rgba(99,102,241,0.3)] text-[#6366f1] font-mono text-xs tracking-widest hover:bg-[rgba(99,102,241,0.1)] transition-all"
+              >
+                READ THE PAPERS
               </Link>
               <button
                 onClick={() => setPhase("intro")}
-                className="flex-1 px-6 py-4 border border-[rgba(99,102,241,0.3)] text-[#6366f1] font-mono text-xs tracking-widest hover:bg-[rgba(99,102,241,0.1)] transition-all"
+                className="px-6 py-4 border border-[rgba(99,102,241,0.2)] text-[#475569] font-mono text-xs tracking-widest hover:text-[#6366f1] hover:border-[rgba(99,102,241,0.4)] transition-all"
               >
                 RECALIBRATE
               </button>
             </div>
-
-            <p className="text-center text-xs font-mono text-[#2d3748] mt-6">
-              Create an account to save your level and track your XP progression
-            </p>
           </div>
         )}
       </div>
