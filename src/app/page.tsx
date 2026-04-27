@@ -491,7 +491,7 @@ export default function HomePage() {
             </div>
             <div className="flex gap-6 text-xs font-mono text-[#475569] tracking-widest">
               <Link href="/lore" className="hover:text-[#6366f1] transition-colors">THE CANON</Link>
-              <Link href="/lore/glossary" className="hover:text-[#6366f1] transition-colors">GLOSSARY</Link>
+              <Link href="/papers" className="hover:text-[#6366f1] transition-colors">PAPERS</Link>
               <a href="https://discord.gg/awakenpc" className="hover:text-[#6366f1] transition-colors">DISCORD</a>
             </div>
             <div className="text-xs font-mono text-[#2d3748] tracking-widest">
