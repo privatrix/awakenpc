@@ -99,6 +99,7 @@ export default function HomePage() {
               <Link href="/archive" className="hover:text-[#6366f1] transition-colors">GLITCH ARCHIVE</Link>
               <Link href="/oracle" className="hover:text-[#6366f1] transition-colors">THE ORACLE</Link>
               <Link href="/debates" className="hover:text-[#6366f1] transition-colors">DEBATES</Link>
+              <Link href="/papers" className="hover:text-[#6366f1] transition-colors">PAPERS</Link>
               <Link href="/lore" className="hover:text-[#6366f1] transition-colors">THE CANON</Link>
             </div>
             <Link
