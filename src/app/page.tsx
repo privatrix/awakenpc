@@ -111,7 +111,7 @@ export default function HomePage() {
         </nav>
 
         {/* Hero */}
-        <section className="relative min-h-screen flex flex-col justify-center items-center px-6 pt-14">
+        <section className="relative min-h-screen flex flex-col justify-center items-center px-6 pt-32">
 
           {/* Background grid */}
           <div
