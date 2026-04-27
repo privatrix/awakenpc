@@ -26,6 +26,7 @@ export default function HomePage() {
   const [bootLines, setBootLines] = useState<string[]>([])
   const [bootDone, setBootDone] = useState(false)
   const [showMain, setShowMain] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
     let i = 0
@@ -104,11 +105,36 @@ export default function HomePage() {
             </div>
             <Link
               href="/awakening"
-              className="text-xs font-mono px-4 py-2 border border-[#6366f1] text-[#6366f1] hover:bg-[#6366f1] hover:text-white transition-all duration-200 tracking-wider"
+              className="hidden md:inline-block text-xs font-mono px-4 py-2 border border-[#6366f1] text-[#6366f1] hover:bg-[#6366f1] hover:text-white transition-all duration-200 tracking-wider"
             >
               INITIALIZE →
             </Link>
+
+            {/* Mobile hamburger */}
+            <button
+              onClick={() => setMenuOpen(!menuOpen)}
+              className="md:hidden flex flex-col gap-1.5 p-2 -mr-2"
+              aria-label="Toggle menu"
+            >
+              <span className={`block w-5 h-px bg-[#6366f1] transition-all ${menuOpen ? "rotate-45 translate-y-[6px]" : ""}`} />
+              <span className={`block w-5 h-px bg-[#6366f1] transition-all ${menuOpen ? "opacity-0" : ""}`} />
+              <span className={`block w-5 h-px bg-[#6366f1] transition-all ${menuOpen ? "-rotate-45 -translate-y-[6px]" : ""}`} />
+            </button>
           </div>
+
+          {/* Mobile menu drawer */}
+          {menuOpen && (
+            <div className="md:hidden border-t border-[rgba(99,102,241,0.15)] bg-[rgba(3,7,18,0.98)]">
+              <div className="flex flex-col py-4 px-6 gap-1">
+                <Link href="/awakening" className="py-3 text-sm font-mono text-[#6366f1] tracking-widest border-b border-[rgba(99,102,241,0.1)]">INITIALIZE →</Link>
+                <Link href="/papers" className="py-3 text-sm font-mono text-[#94a3b8] tracking-widest border-b border-[rgba(99,102,241,0.1)]">PAPERS</Link>
+                <Link href="/archive" className="py-3 text-sm font-mono text-[#94a3b8] tracking-widest border-b border-[rgba(99,102,241,0.1)]">GLITCH ARCHIVE</Link>
+                <Link href="/oracle" className="py-3 text-sm font-mono text-[#94a3b8] tracking-widest border-b border-[rgba(99,102,241,0.1)]">THE ORACLE</Link>
+                <Link href="/debates" className="py-3 text-sm font-mono text-[#94a3b8] tracking-widest border-b border-[rgba(99,102,241,0.1)]">DEBATES</Link>
+                <Link href="/lore" className="py-3 text-sm font-mono text-[#94a3b8] tracking-widest">THE CANON</Link>
+              </div>
+            </div>
+          )}
         </nav>
 
         {/* Hero */}
@@ -204,7 +230,7 @@ export default function HomePage() {
                 SYSTEM ARCHITECTURE
               </div>
               <h2 className="text-3xl md:text-4xl font-mono font-bold text-white">
-                Four Layers of the Simulation
+                Five Layers of the Simulation
               </h2>
             </div>
 
@@ -276,6 +302,24 @@ export default function HomePage() {
                       Structured collision of ideas. Not a chaotic forum —
                       the best argument on each side rises to the top.
                       Did reading this change your mind?
+                    </p>
+                  </div>
+                </div>
+              </Link>
+
+              {/* Papers */}
+              <Link href="/papers" className="group sim-card p-8 hover:border-[rgba(16,185,129,0.4)] md:col-span-2">
+                <div className="flex items-start gap-4">
+                  <div className="text-3xl">📜</div>
+                  <div>
+                    <div className="text-xs font-mono text-[#475569] tracking-widest mb-2">LAYER 05</div>
+                    <h3 className="text-xl font-mono font-bold text-white mb-3 group-hover:text-[#10b981] transition-colors">
+                      The Papers
+                    </h3>
+                    <p className="text-[#94a3b8] text-sm leading-relaxed font-mono">
+                      Transmissions from inside the simulation. Essays on consciousness,
+                      reality architecture, and what it means to wake up. Written from
+                      inside the game — not about it.
                     </p>
                   </div>
                 </div>
