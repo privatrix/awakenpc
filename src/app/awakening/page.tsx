@@ -4,6 +4,7 @@ import { useState } from "react"
 import Link from "next/link"
 import { ARCHETYPES, scoreToArchetype, type Archetype } from "@/lib/archetypes"
 import { saveProfile } from "@/lib/profile"
+import SubscribeForm from "@/components/SubscribeForm"
 
 const QUESTIONS = [
   {
@@ -327,6 +328,22 @@ export default function AwakeningPage() {
               <p className="text-[#94a3b8] font-mono text-sm leading-relaxed">
                 {archetype.nextHint}
               </p>
+            </div>
+
+            {/* Newsletter signup */}
+            <div
+              className="border bg-[#0a0f1e] p-6 mb-8"
+              style={{
+                borderColor: `${archetype.color}30`,
+              }}
+            >
+              <div className="text-xs font-mono tracking-widest mb-3 text-center" style={{ color: archetype.color }}>
+                STAY IN TRANSMISSION RANGE
+              </div>
+              <p className="text-sm font-mono text-[#94a3b8] leading-relaxed mb-5 text-center">
+                Receive future Papers calibrated to your archetype. The Oracle will recognize you on return.
+              </p>
+              <SubscribeForm source={`awakening:${archetype.id}`} />
             </div>
 
             {/* CTAs */}

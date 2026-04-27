@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react"
 import Link from "next/link"
 import { POSTS } from "./papers/posts"
+import SubscribeForm from "@/components/SubscribeForm"
 
 const BOOT_LINES = [
   "> SIMULATION RUNTIME v7.4.1 — INITIALIZING...",
@@ -511,6 +512,22 @@ export default function HomePage() {
                 ENTER THE ARCHIVE →
               </Link>
             </div>
+          </div>
+        </section>
+
+        {/* Newsletter section */}
+        <section className="py-24 px-6 border-t border-[rgba(99,102,241,0.1)]">
+          <div className="max-w-xl mx-auto text-center">
+            <div className="text-xs font-mono text-[#475569] tracking-widest mb-4">
+              TRANSMISSION CHANNEL
+            </div>
+            <h2 className="text-3xl md:text-4xl font-mono font-bold text-white mb-4">
+              Stay in range.
+            </h2>
+            <p className="text-[#94a3b8] font-mono text-sm mb-8 leading-relaxed">
+              Receive new Papers as they arrive. Slow cadence. No noise. The next transmission lands when it is ready.
+            </p>
+            <SubscribeForm source="home" />
           </div>
         </section>
 

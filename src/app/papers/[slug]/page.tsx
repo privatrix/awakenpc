@@ -2,6 +2,7 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import { POSTS, getPost } from "../posts"
 import PaperReadTracker from "./PaperReadTracker"
+import SubscribeForm from "@/components/SubscribeForm"
 
 export async function generateStaticParams() {
   return POSTS.map(p => ({ slug: p.slug }))
@@ -119,22 +120,27 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
         {/* Footer */}
         <div className="mt-16 pt-8 border-t border-[rgba(99,102,241,0.15)]">
           <div
-            className="border border-[rgba(99,102,241,0.3)] bg-[#0f1629] p-8 text-center mb-10"
+            className="border border-[rgba(99,102,241,0.3)] bg-[#0f1629] p-8 mb-10"
             style={{ boxShadow: "0 0 30px rgba(99,102,241,0.05)" }}
           >
-            <div className="text-xs font-mono text-[#475569] tracking-widest mb-4">
+            <div className="text-xs font-mono text-[#475569] tracking-widest mb-3 text-center">
               IF THIS LANDED
             </div>
-            <p className="text-[#94a3b8] font-mono text-sm leading-relaxed mb-6">
-              You are not a background character. Take the awakening assessment and find out where you are in the simulation.
+            <h3 className="text-xl font-mono font-bold text-white mb-3 text-center">
+              Receive new Papers as they arrive.
+            </h3>
+            <p className="text-[#94a3b8] font-mono text-sm leading-relaxed mb-6 text-center">
+              Slow-cadence transmissions. No marketing noise. Just the next essay when it is ready.
             </p>
-            <Link
-              href="/awakening"
-              className="inline-block px-8 py-4 bg-[#6366f1] text-white font-mono text-xs tracking-widest hover:bg-[#5558e8] transition-all"
-              style={{ boxShadow: "0 0 20px rgba(99,102,241,0.3)" }}
-            >
-              BEGIN AWAKENING →
-            </Link>
+            <SubscribeForm source={`paper:${post.slug}`} />
+            <div className="mt-8 pt-6 border-t border-[rgba(99,102,241,0.15)] text-center">
+              <Link
+                href="/awakening"
+                className="text-xs font-mono text-[#6366f1] tracking-widest hover:text-white transition-colors"
+              >
+                OR — TAKE THE AWAKENING ASSESSMENT →
+              </Link>
+            </div>
           </div>
 
           <Link
