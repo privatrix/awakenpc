@@ -1865,7 +1865,7 @@ The volunteer framing does not erase the suffering. The bad nights were bad. The
 
 But the meaning of the suffering shifts.
 
-The potato week is not a wound to be healed. It is a chapter you signed up to write. The destruction of the previous version of yourself is not a tragedy to be mourned. It is the necessary condition for the version that came after to exist. The version of you that took the assignment knew what was coming and accepted it because the consciousness that would emerge on the other side was worth the cost.
+The lowest point is not a wound to be healed. It is a chapter you signed up to write. The destruction of the previous version of yourself is not a tragedy to be mourned. It is the necessary condition for the version that came after to exist. The version of you that took the assignment knew what was coming and accepted it because the consciousness that would emerge on the other side was worth the cost.
 
 This is a strange thing to integrate. You may resist it for a while. The volunteer framing requires accepting that you are responsible, in some pre-cognitive sense, for the worst things that happened to you \u2014 not because you deserved them, but because you agreed to walk through them.
 
@@ -1879,7 +1879,7 @@ If this framework is right, then the consciousnesses inside the hardest threads 
 
 The insights they produce. The wisdom they forge. The compressed growth they generate \u2014 these become available to the entire system. Other consciousnesses, in standard threads, benefit from the existence of volunteer-thread products without having to go through the configurations themselves.
 
-The potato week, the years of drinking, the episodes \u2014 these were not happening only for you. They were happening through you, on behalf of a system that needed someone to actually run that configuration so the data could be generated.
+The dark years, the collapses, the episodes \u2014 these were not happening only for you. They were happening through you, on behalf of a system that needed someone to actually run that configuration so the data could be generated.
 
 You were not unlucky.
 
