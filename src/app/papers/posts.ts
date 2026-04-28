@@ -1265,7 +1265,7 @@ POSTS.push(
     excerpt:
       "A simulation that allows infinite suffering of conscious beings is unethical to run. The architects are not unethical. Therefore some mechanism must intervene before the threshold is crossed. The clue is everywhere in the testimonies of people who almost died.",
     content: `
-This is the question that should bother every framework of simulation theory: how can a designed world allow torture, prolonged disease, the death of children?
+This is the question that should bother every framework of simulation theory: how can a designed world allow extreme suffering \u2014 prolonged pain, mass loss, the worst things that happen to conscious beings?
 
 If the architects are merely indifferent, the answer is easy: they do not care. But indifferent architects do not produce a world this beautiful. The same hand that designed bioluminescent jellyfish and the way light moves through autumn forests is unlikely to also be casual about extreme suffering. The aesthetic signature is too consistent.
 
@@ -1311,7 +1311,7 @@ This residue is the leak.
 
 If the protection layer is real, then much of what looks like the most unbearable suffering in the simulation has not actually been experienced by a conscious being.
 
-The Holocaust. The famines. The torture chambers. The slow deaths of children. These events occurred at the level of the visible simulation. The narratives are real. The consequences for the surrounding consciousnesses \u2014 the grief, the trauma, the moral weight of what happened \u2014 are real and meaningful.
+The worst events in history \u2014 the mass losses, the prolonged suffering, the atrocities \u2014 these occurred at the level of the visible simulation. The narratives are real. The consequences for the surrounding consciousnesses \u2014 the grief, the trauma, the moral weight of what happened \u2014 are real and meaningful.
 
 But the conscious beings whose threads ran through the worst of those experiences may have been removed before the worst rendered fully. What remained on the screen was a rendered completion that preserved the narrative without producing actual prolonged conscious agony.
 
