@@ -577,6 +577,22 @@ The answer, I think, is that Players do not experience it the way we do.
 
 ---
 
+**The four mechanisms** — a quick map before we go deep:
+
+1. **Time Compression.** Outside the simulation, time runs at a different rate. A full human lifetime, eighty years of felt experience, may cost the Player only an afternoon of external time.
+
+2. **Parallel Threading.** A Player does not run a single life. Their consciousness spawns multiple simultaneous threads, each one experiencing first-person existence as a different character — you, your brother, the stranger on the train — all at once.
+
+3. **The Attention Gradient.** Threads do not receive equal Player focus. Some run on lower resolution while the Player\'s deeper attention concentrates on threads approaching inflection points. This is why some people in your life feel intensely present and others feel like they are sleepwalking.
+
+4. **The Outsourced Body.** Even within a single thread, the Player only fully inhabits the meaningful moments. The day-to-day routine — the commute, the half-present meals, the autopilot decisions — runs on NPC default. The Player checks in for the peaks.
+
+These are not mutually exclusive. They likely operate together. Each one solves a different part of the same problem: how does a finite consciousness inhabit an infinite-feeling network of lives?
+
+Let us take them one at a time.
+
+---
+
 **Time compression**
 
 The first part of the answer is temporal. Outside the simulation, time almost certainly runs at a different rate than inside it. This is not speculation — it is what you already know from dreams. A dream that feels like weeks can be measured in minutes of external time. The simulation is more sophisticated than a dream, but the principle holds.
