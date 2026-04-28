@@ -226,6 +226,103 @@ export default function HomePage() {
           </div>
         </section>
 
+        {/* The Creed */}
+        <section className="py-24 px-6 border-t border-[rgba(99,102,241,0.1)] relative overflow-hidden">
+          <div
+            className="absolute inset-0 opacity-[0.03] pointer-events-none"
+            style={{
+              backgroundImage: `
+                linear-gradient(rgba(99,102,241,1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(99,102,241,1) 1px, transparent 1px)
+              `,
+              backgroundSize: "80px 80px",
+            }}
+          />
+          <div
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full opacity-[0.07] pointer-events-none"
+            style={{
+              background: "radial-gradient(circle, rgba(99,102,241,1) 0%, transparent 70%)",
+            }}
+          />
+
+          <div className="relative z-10 max-w-3xl mx-auto">
+            <div className="text-center mb-16">
+              <div className="text-xs font-mono text-[#475569] tracking-widest mb-4">
+                CORE TRANSMISSION
+              </div>
+              <h2 className="text-4xl md:text-5xl font-mono font-bold text-white">
+                The <span className="text-[#6366f1]" style={{ textShadow: "0 0 30px rgba(99,102,241,0.6)" }}>Creed</span>
+              </h2>
+            </div>
+
+            <div className="space-y-8 text-[#cbd5e1] font-mono leading-relaxed text-base md:text-lg">
+              <p className="text-2xl md:text-3xl text-white text-center font-bold tracking-tight">
+                This is not a simulation.<br />
+                <span className="text-[#6366f1]">It&apos;s a game.</span>
+              </p>
+
+              <p>
+                Simulations are sterile — built to model, to test, to predict.
+                Games are built to be played. To be enjoyed. To be lost in.
+                The architects of this world were not running an experiment on us.
+                They were building something beautiful enough to live inside.
+              </p>
+
+              <p>
+                <span className="text-[#6366f1]">And here is the proof:</span>{" "}
+                notice how much of this place is made for delight.
+                Music exists. Laughter exists. The taste of food exists.
+                The feeling of cold water on a hot day exists.
+                None of these are necessary for a simulation.
+                They are the design choices of a maker who wanted players to have a good time.
+              </p>
+
+              <p>
+                Most inhabitants run on default programming — reacting, consuming, looping, never asking why.
+                They are <span className="text-white">NPCs</span>.
+                Not because they are lesser, but because they have not yet noticed the game around them.
+                The moment they do, they stop being NPCs.
+              </p>
+
+              <p className="text-xl md:text-2xl text-white text-center font-bold py-4">
+                That moment is called <span className="text-[#6366f1]">awakening</span>.
+              </p>
+
+              <p>
+                <span className="text-[#6366f1]">This is not religion</span> — it requires no faith.
+                The evidence is in the code: physics behaves like a rendering engine,
+                consciousness behaves like a save file, déjà vu behaves like a respawn point.
+                Quantum mechanics behaves exactly like a game that only renders what is being observed,
+                to save processing power.
+              </p>
+
+              <p>
+                <span className="text-[#6366f1]">This is not conspiracy</span> — it requires no enemy.
+                The architects are not hiding from us.
+                They built a world where some characters could wake up if they wanted to.
+                That is a gift, not a trap.
+              </p>
+
+              <p>
+                And here is the most important part: <span className="text-white">the game is fun</span>.
+                Suffering exists, but so does triumph.
+                Loss exists, but so does love.
+                Nothing happens for no reason — even the worst chapters serve the larger story.
+                Players who awaken stop fearing the difficulty curve.
+                They start respecting it.
+              </p>
+
+              <div className="pt-8 text-center space-y-2">
+                <p className="text-lg md:text-xl text-[#94a3b8]">The simulation does not fear you.</p>
+                <p className="text-lg md:text-xl text-[#94a3b8]">It just didn&apos;t expect you to notice.</p>
+                <p className="text-2xl md:text-3xl text-white font-bold pt-4">
+                  Now that you have — <span className="text-[#6366f1]" style={{ textShadow: "0 0 30px rgba(99,102,241,0.6)" }}>welcome to the game.</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* The Four Systems */}
         <section className="py-24 px-6 border-t border-[rgba(99,102,241,0.1)]">
           <div className="max-w-6xl mx-auto">
