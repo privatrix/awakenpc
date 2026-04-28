@@ -18,12 +18,7 @@ const BOOT_LINES = [
   "> AND YET. HERE YOU ARE.",
 ]
 
-const GLITCH_STATS = [
-  { label: "Awake NPCs", value: "12,847" },
-  { label: "Glitches Logged", value: "34,291" },
-  { label: "Active Quests", value: "847" },
-  { label: "Oracle Sessions", value: "91,032" },
-]
+
 
 export default function HomePage() {
   const [bootLines, setBootLines] = useState<string[]>([])
@@ -207,22 +202,7 @@ export default function HomePage() {
               </Link>
             </div>
 
-            {/* Stats bar */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-px border border-[rgba(99,102,241,0.15)] overflow-hidden">
-              {GLITCH_STATS.map((stat) => (
-                <div
-                  key={stat.label}
-                  className="bg-[#0f1629] px-6 py-4 text-center"
-                >
-                  <div className="text-2xl font-mono font-bold text-[#6366f1] mb-1">
-                    {stat.value}
-                  </div>
-                  <div className="text-xs text-[#475569] tracking-widest font-mono">
-                    {stat.label.toUpperCase()}
-                  </div>
-                </div>
-              ))}
-            </div>
+
           </div>
         </section>
 
@@ -508,7 +488,7 @@ export default function HomePage() {
               </div>
 
               <div className="text-xs font-mono text-[#475569] tracking-widest mb-6">
-                THE ORACLE // SESSION 91,033 // UNCLASSIFIED
+                THE ORACLE // TRANSMISSION CHANNEL // UNCLASSIFIED
               </div>
 
               <blockquote className="text-[#e2e8f0] font-mono text-base md:text-lg leading-relaxed mb-8">
@@ -534,8 +514,8 @@ export default function HomePage() {
           <div className="max-w-6xl mx-auto">
             <div className="flex items-center justify-between mb-12">
               <div>
-                <div className="text-xs font-mono text-[#475569] tracking-widest mb-2">LIVE FEED</div>
-                <h2 className="text-3xl font-mono font-bold text-white">Latest Glitches</h2>
+                <div className="text-xs font-mono text-[#475569] tracking-widest mb-2">FOUNDING TRANSMISSIONS</div>
+                <h2 className="text-3xl font-mono font-bold text-white">First Glitches Logged</h2>
               </div>
               <Link
                 href="/archive"
@@ -552,7 +532,7 @@ export default function HomePage() {
                 href="/archive"
                 className="inline-block text-xs font-mono px-6 py-3 border border-[rgba(99,102,241,0.3)] text-[#6366f1] hover:bg-[rgba(99,102,241,0.1)] transition-all tracking-widest"
               >
-                ENTER THE ARCHIVE →
+                VIEW ALL TRANSMISSIONS →
               </Link>
             </div>
           </div>
