@@ -1,6 +1,8 @@
 import Link from "next/link"
 import { POSTS } from "./posts"
 
+export const dynamic = "force-dynamic"
+
 export const metadata = {
   title: "Papers — AwakenNPC",
   description: "Transmissions from inside the simulation. Essays on consciousness, reality architecture, and what it means to wake up.",
