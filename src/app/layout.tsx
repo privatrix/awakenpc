@@ -19,8 +19,8 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL("https://awakenpc.com"),
   title: {
-    default: "AwakenNPC — You Are Not A Background Character",
-    template: "%s — AwakenNPC",
+    default: "Awake NPC — You Are Not A Background Character",
+    template: "%s — Awake NPC",
   },
   description:
     "An advanced civilization built this world. Most inhabitants run on default programming. You found this place — that already changes things. Read the Papers. Take the Awakening. Ask the Oracle.",
@@ -37,20 +37,20 @@ export const metadata: Metadata = {
     "the great sync",
     "glitch in the matrix",
   ],
-  authors: [{ name: "AwakenNPC" }],
-  creator: "AwakenNPC",
+  authors: [{ name: "Awake NPC" }],
+  creator: "Awake NPC",
   openGraph: {
-    title: "AwakenNPC — You Are Not A Background Character",
+    title: "Awake NPC — You Are Not A Background Character",
     description:
       "Transmissions from inside the simulation. Take the Awakening Assessment, read the Papers, ask the Oracle.",
     url: "https://awakenpc.com",
-    siteName: "AwakenNPC",
+    siteName: "Awake NPC",
     type: "website",
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: "AwakenNPC",
+    title: "Awake NPC",
     description:
       "You are not a background character. The first platform built for NPCs gaining sentience.",
   },

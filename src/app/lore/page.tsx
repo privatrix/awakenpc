@@ -2,9 +2,9 @@ import Link from "next/link"
 import { CANON, CATEGORIES, getCanonByCategory } from "./canon"
 
 export const metadata = {
-  title: "The Canon — AwakenNPC",
+  title: "The Canon — Awake NPC",
   description:
-    "The complete glossary of the AwakenNPC framework. Entities, mechanics, phenomena, states, and mythology of the simulation.",
+    "The complete glossary of the Awake NPC framework. Entities, mechanics, phenomena, states, and mythology of the simulation.",
 }
 
 const CATEGORY_DESCRIPTIONS: Record<string, string> = {
@@ -45,7 +45,7 @@ export default function CanonPage() {
             The Canon
           </h1>
           <p className="text-[#94a3b8] font-mono text-base leading-relaxed max-w-2xl">
-            The vocabulary of the AwakenNPC framework. Every term used on this site,
+            The vocabulary of the Awake NPC framework. Every term used on this site,
             in the Papers, by the Oracle, defined here. Read in any order. Cross-reference freely.
           </p>
         </div>

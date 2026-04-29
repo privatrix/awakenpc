@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og"
 
 export const runtime = "edge"
-export const alt = "AwakenNPC — You Are Not A Background Character"
+export const alt = "Awake NPC — You Are Not A Background Character"
 export const size = { width: 1200, height: 630 }
 export const contentType = "image/png"
 

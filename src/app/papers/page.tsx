@@ -4,7 +4,7 @@ import { POSTS } from "./posts"
 export const dynamic = "force-dynamic"
 
 export const metadata = {
-  title: "Papers — AwakenNPC",
+  title: "Papers — Awake NPC",
   description: "Transmissions from inside the simulation. Essays on consciousness, reality architecture, and what it means to wake up.",
 }
 
