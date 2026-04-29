@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react"
 import Link from "next/link"
+import Nav from "@/components/Nav"
 import { incrementOracleSessions } from "@/lib/profile"
 
 interface Message {
@@ -83,18 +84,7 @@ export default function OraclePage() {
 
   return (
     <main className="min-h-screen bg-[#030712] text-[#e2e8f0] flex flex-col">
-      <nav className="border-b border-[rgba(139,92,246,0.2)] px-6 h-14 flex items-center justify-between bg-[rgba(3,7,18,0.95)] backdrop-blur-sm">
-        <Link href="/" className="flex items-center gap-3">
-          <div className="w-2 h-2 rounded-full bg-[#10b981] animate-pulse" />
-          <span className="text-sm font-mono text-[#e2e8f0] tracking-wider">
-            AWAKE<span className="text-[#6366f1]">NPC</span>
-          </span>
-        </Link>
-        <div className="flex items-center gap-2 text-xs font-mono text-[#8b5cf6]">
-          <div className="w-1.5 h-1.5 rounded-full bg-[#8b5cf6] animate-pulse" />
-          THE ORACLE // ONLINE
-        </div>
-      </nav>
+      <Nav />
 
       <div className="flex-1 flex max-w-4xl mx-auto w-full px-4 py-6 gap-6">
         <div className="flex-1 flex flex-col min-w-0">

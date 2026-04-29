@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
+import Nav from "@/components/Nav"
 import { ARCHETYPES, scoreToArchetype, type Archetype } from "@/lib/archetypes"
 import { saveProfile } from "@/lib/profile"
 import SubscribeForm from "@/components/SubscribeForm"
@@ -150,11 +151,7 @@ export default function AwakeningPage() {
 
   return (
     <main className="min-h-screen bg-[#030712] text-[#e2e8f0] flex flex-col">
-      <nav className="border-b border-[rgba(99,102,241,0.15)] px-6 h-14 flex items-center">
-        <Link href="/" className="text-sm font-mono text-[#475569] hover:text-[#e2e8f0] tracking-wider transition-colors">
-          ← AWAKENPC
-        </Link>
-      </nav>
+      <Nav />
 
       <div className="flex-1 flex items-center justify-center px-6 py-12">
 

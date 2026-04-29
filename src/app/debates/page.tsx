@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react"
 import Link from "next/link"
+import Nav from "@/components/Nav"
 import { getFingerprint, getDebateVote, setDebateVote } from "@/lib/fingerprint"
 import { getProfile } from "@/lib/profile"
 
@@ -152,16 +153,7 @@ export default function DebatesPage() {
   return (
     <main className="min-h-screen bg-[#030712] text-[#e2e8f0]">
       {/* Nav */}
-      <nav className="fixed top-0 left-0 right-0 z-40 border-b border-[rgba(99,102,241,0.15)] bg-[rgba(3,7,18,0.9)] backdrop-blur-sm">
-        <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-3">
-            <div className="w-2 h-2 rounded-full bg-[#10b981] animate-pulse" />
-            <span className="text-sm font-mono text-[#e2e8f0] tracking-wider">
-              AWAKE<span className="text-[#6366f1]">NPC</span>
-            </span>
-          </Link>
-        </div>
-      </nav>
+      <Nav />
 
       <div className="max-w-6xl mx-auto px-6 pt-28 pb-24">
         {/* Header */}
