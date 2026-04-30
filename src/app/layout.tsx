@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { JetBrains_Mono, Inter } from "next/font/google";
 import Script from "next/script";
+import Footer from "@/components/Footer";
 import "./globals.css";
 
 const GA_ID = "G-6TS03KLDF5";
@@ -69,6 +70,7 @@ export default function RootLayout({
     <html lang="en" className={`${jetbrainsMono.variable} ${inter.variable}`}>
       <body className="antialiased">
         {children}
+        <Footer />
         {/* Google Analytics (GA4) */}
         <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
