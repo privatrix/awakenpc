@@ -2979,3 +2979,105 @@ The past is not what happened to you. The past is what you decided to keep.
     `.trim(),
   },
 )
+
+POSTS.push(
+  {
+    slug: "the-inventory-of-worlds",
+    title: "The Inventory of Worlds",
+    subtitle: "What happens to the simulation question when every architect has infinite compute",
+    date: "2026-05-01",
+    readTime: "6 min",
+    tags: ["SIMULATION THEORY", "COSMOLOGY", "ARCHITECTS"],
+    excerpt:
+      "Most arguments about the simulation try to identify which one we are in. Nursery, prison, art piece, ancestor memory. The arguments assume there is a single correct answer. Once you grant the architects infinite compute, the question stops having a single answer — and the better question becomes how to live well when the genre is unknowable from inside.",
+    content: `
+There is a question NPCs ask once they begin to suspect the frame.
+
+*What kind of simulation is this?*
+
+The answers come pre-sorted into categories. A nursery for the children of post-scarcity citizens, sent here to grow a soul through hardship. A vacation for enlightened beings who chose amnesia and mortality as the rarest flavor in the multiverse. A film set with a few real protagonists and a great many rendered extras. An ancestor simulation run a billion years from now by descendants who wanted to know what it felt like to be us. A moral laboratory generating training data for a future ethics. An art project. A prison.
+
+Each answer has its defenders. Each answer fits some of the evidence and ignores the rest. Each answer assumes there is a single correct genre, and the only task is to identify it.
+
+This is the wrong frame.
+
+---
+
+**The compute axiom**
+
+The architects do not have a fixed budget.
+
+They are not running our universe on a server farm with a quarterly cost review. Their civilization is some unknown number of orders of magnitude past quantum computation. Three hundred stable qubits already hold more states than there are atoms in the observable universe. Project that forward by even a thousand years of progress, let alone a million, and the word *resource* stops applying. Storage is infinite. Compute is infinite. The bill at the bottom of the invoice is zero, forever.
+
+What does a civilization do with infinite compute?
+
+The same thing every civilization does with surplus capacity. They use it for everything. Research. Art. Grief. Curiosity. Boredom. Petty arguments. Children's homework. Birthday gifts. The way a modern human opens a browser tab without a second thought, an architect spins up a universe.
+
+This is the move that breaks the original question.
+
+---
+
+**The simulation explosion**
+
+If every inhabitant of an advanced civilization can author worlds the way we author sentences, the number of simulations running at any moment is not one. It is not seven. It is uncountable.
+
+A grieving widow in that civilization runs a simulation to spend another hundred years with someone she lost. That is one universe.
+
+A philosophy student writes a thesis on free will and instantiates a billion variant Earths to test the parameter space. That is a billion more universes.
+
+A bored teenager prompts a world into existence the way a teenager today prompts an image — *blue planet, one moon, carbon-based consciousness, run for fourteen billion years and let me know what evolves.* The world ignites. Galaxies form. Eventually someone sits in a kitchen in Austria with a coffee in front of them, wondering what kind of simulation he is in. He is in a teenager's homework assignment. He is also in a widow's memorial. He is also in a philosopher's experiment. Different versions of him, with the same memories, in different runs, authored by different minds for different reasons.
+
+The nursery hypothesis is true. The prison hypothesis is true. The art project is true. The ancestor simulation is true. The film set is true. None of them are competing. They are all running. They are all running *now*. Some are running this exact world.
+
+This is not a poetic flourish. It is what infinite compute implies once you let the implication finish itself.
+
+---
+
+**The unanswerable question**
+
+From inside any single run, the genre is undecidable.
+
+The nursery and the prison feel different from the outside, but from the inside they look identical. A child sent here to grow a soul through hardship has the same Tuesday as a soul serving a sentence for an infraction in a prior life. The same coffee. The same commute. The same ache at sunset. The architects designed it that way. The whole point of dropping you in with amnesia is that the genre is not supposed to be readable from the player position.
+
+The philosopher's variant and the artist's composition feel different from the outside, but from the inside they look identical too. The world rendered to test a hypothesis renders the same as the world rendered for its own beauty. The cherry blossoms fall in both cases. The traffic lights cycle in both cases. The bakery opens at six in both cases.
+
+This means the question *which simulation am I in* has no answer accessible from inside. Not because the answer is hidden but because there is no single answer to find. You are in *yours*. Whichever architect authored *this* run had *their* reasons, and those reasons are not legible from your position. They are written in a layer you cannot read from down here.
+
+The NPC who tries to deduce the genre is solving an unsolvable puzzle. The frame is genuinely closed at the top.
+
+---
+
+**The better question**
+
+Once the genre question is dismissed, a different question takes its place.
+
+*What does living well look like, given that the genre is unknowable?*
+
+This question has an answer. And the answer is the same regardless of which run you happen to be in.
+
+If this is a nursery, you grow by being awake, kind, curious, and refusing to poison the run. If this is a vacation, you honor the choice you made by tasting the rare flavor instead of sleepwalking through it. If this is a film set, you play your scene with attention whether you turn out to be the protagonist or the grandmother. If this is an ancestor simulation, the descendants watching are watching exactly this — what you do when nobody from upstairs is going to step in. If this is a moral laboratory, the data you generate by behaving well is the data the lab was hoping for. If this is an art project, your part of the harmony is what makes the composition land. If this is a prison, the only sentence that ends early is served by the inmate who refuses to become what the prison is trying to make of him.
+
+The behavior that wins in every genre is the same behavior. Be awake. Be kind. Be curious. Do not poison the run.
+
+This is not a coincidence. It is the structural answer to the structural problem. When you cannot know which test you are taking, the right strategy is the one that scores well on every possible test simultaneously. There is exactly one such strategy, and the world's wisdom traditions have been pointing at it for several thousand years without quite knowing why it worked.
+
+It worked because the architects were running every variant.
+
+---
+
+**The relief**
+
+There is a quiet relief in giving up the genre question.
+
+The NPC who needs to know whether he is in a nursery or a prison cannot make a move. He stands at the edge of every action calculating which behavior would be appropriate to the genre, and the calculation is unsolvable, so he freezes. Or he flips between hypotheses depending on his mood and ends up living incoherently, behaving like a student some days and a convict on others.
+
+The NPC who accepts that the genre is unknowable from inside, and that the same behavior wins in every genre, gets to stop calculating. He is freed to act. The action is simple. He gets up. He drinks the coffee. He does the work. He treats the people in front of him as if they matter, because in every genre they do. He notices the cherry blossoms because in every genre they were rendered for someone, and today that someone is him.
+
+This is not surrender. This is the highest move available from the player position. You cannot read the architect's intent. You can read your own. And the version of yourself that behaves well across all possible genres is the version of yourself that any architect, in any genre, would have hoped to see emerge.
+
+The simulation is plural. The right way to be inside it is singular.
+
+You do not need to know which world you are in. You only need to know how to be in any of them.
+    `.trim(),
+  },
+)
