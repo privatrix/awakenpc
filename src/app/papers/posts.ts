@@ -3081,3 +3081,115 @@ You do not need to know which world you are in. You only need to know how to be 
     `.trim(),
   },
 )
+
+POSTS.push(
+  {
+    slug: "the-save-point",
+    title: "The Save Point",
+    subtitle: "Why the architects made progress expensive to lock in — and how most NPCs never save at all",
+    date: "2026-05-01",
+    readTime: "5 min",
+    tags: ["SIMULATION THEORY", "GAME MECHANICS", "ARCHITECTS"],
+    excerpt:
+      "Every game has save points. The developers decide where they go. Past a certain door, the old state is gone — the new baseline is locked. The simulation has them too. The architects built them the same way, for the same reason. Most NPCs never trigger one, because they spend their whole lives confusing the save screen with saving.",
+    content: `
+Every game has save points.
+
+Not every game lets you save anywhere. The developers decide where the checkpoints go. They place them deliberately — after the cutscene, before the boss fight, at the end of the chapter. Past a certain door, whatever came before is locked in. The character's old state is archived. The new baseline is written to disk.
+
+Die before the save point and you lose everything since the last one. Die after it and you respawn there. The design is intentional: progress is real, but only the progress the system has registered.
+
+If this is a simulation, the architects built save points into this level too.
+
+---
+
+**How the save mechanism works**
+
+The architects had a design problem.
+
+A simulation that let NPCs save via intention would collapse under its own weight. Every NPC would save constantly — every resolution, every morning ambition, every text sent to a friend saying *I've changed, this time is different.* The checkpoint mechanism would be worthless. Progress would be a fiction. NPCs would reset to zero and believe themselves miles ahead.
+
+So the architects made saving expensive.
+
+They tied the save point to a specific trigger: **the world outside the NPC must change in response to something the NPC did.** Not a thought. Not a plan. Not a feeling of commitment. An action with external consequence. Money moved. A document was signed. Something went live that other people can now interact with. The state of reality outside the NPC's skull updated.
+
+That is the save writing to disk. Everything before it remains at risk. Everything after it cannot be rewound to zero.
+
+The architects designed it this way because it is the only mechanism that cannot be gamed. You cannot fake an external consequence. You cannot convince yourself the world moved when it didn't. The checkpoint only registers when the simulation itself registers it — and the simulation only registers what actually happened, not what you planned to make happen.
+
+---
+
+**The false save**
+
+Most NPCs spend their entire run confusing the save screen with saving.
+
+The save screen is the moment of intention. The menu opens. The option appears. The NPC feels the emotional weight of the choice — the resolution, the commitment, the clarity of knowing what they are going to do. This feeling is real. The save screen looks exactly like a save point. The interface is indistinguishable.
+
+But the save screen is not a save. It is the option to save. The NPC still has to press the button. And pressing the button costs something.
+
+The journal entry is the save screen. The plan is the save screen. The conversation with a friend where you lay out exactly how things are going to change — that is the save screen. These moments are not worthless. They are the moment before the save. But they are not the save.
+
+This is why NPCs reset.
+
+They believed the feeling of commitment was the checkpoint. They felt themselves change. They told people they had changed. And then life arrived with its standard load of difficulty, and when they looked for the baseline they thought they had locked in, they found they were back where they started. Not last week. Not last month. All the way back to the old state, the one before all the resolution and planning and feeling — because the save never wrote.
+
+The simulation does not care about intentions. It only records what moved.
+
+---
+
+**What a real save feels like**
+
+Real save points have a signature that is different from the save screen.
+
+The save screen produces relief. Warmth. The satisfying feeling of having decided. The NPC walks away lighter because the problem has been resolved in their head. But nothing outside their head has changed yet.
+
+A real save point produces the opposite. It produces a specific kind of weight — the weight of something that cannot be undone. The contract is signed. The paper is published. The first day is complete. The thing exists in the world now, outside the NPC's control, interacting with other things, registered in a system the NPC did not build and cannot edit.
+
+That weight is the confirmation sound. That is the game telling you: *saved.*
+
+NPCs who have triggered real save points know the feeling. It is quieter than the save screen. Less euphoric. It does not feel like victory. It feels like the ground shifted slightly under your feet, and when you check, you find you are standing somewhere you cannot step back from. Not because something is chasing you. Because the old ground is simply no longer there.
+
+The €5,000 moved. The papers are live. Day one happened.
+
+Those are not intentions. Those are saves.
+
+---
+
+**What the architects were building toward**
+
+There is a reason the architects designed saving this way, beyond preventing the mechanism from being gamed.
+
+A simulation where progress is free — where every intention counts as a checkpoint, where the character advances just by feeling like they will advance — is a simulation without stakes. Without stakes, there is no story. Without story, the run generates no meaningful data, no growth, no experience worth having.
+
+The cost of saving is what makes the progress real.
+
+The NPC who signs the contract on the apartment is not the same NPC who decided to buy an apartment. The decision was a save screen. The signature was a save. Between those two events, the character's risk profile changed. Something was put in motion that requires the future self to show up and complete it. The simulation locked in a version of the NPC who now has a September appointment they cannot miss.
+
+This is the mechanic the architects were building toward. Not punishment. Architecture.
+
+The save point creates a character who has skin in the game — who is playing for real, not just running scenarios. The simulation needs NPCs who are genuinely committed, not just perpetually planning to be committed. Real commitment only exists once it has been paid for. The architects set the price at the same rate every time: something outside your head has to move.
+
+---
+
+**The skill**
+
+Once you understand how saving works, a skill becomes available.
+
+Most NPCs stumble through save points without knowing they are in one. The moment that just wrote their new baseline — they were distracted. They were already thinking about the next thing. They were on their phone while the contract was being countersigned. The checkpoint passed and they did not feel it land. They will not know they saved until much later, when they look back and realize they cannot find the old version of themselves anywhere.
+
+An awakened NPC learns to recognize a save point when they are standing in it.
+
+Not the save screen — the NPCs who confuse intention for saving tend to be very alert to save screens, which is part of the problem. The awakened NPC learns to feel the different quality of weight that comes when the world is about to change state in response to something they are doing. The moment just before external consequence. The act, not the plan.
+
+They show up fully for that moment. They let it register. They feel the ground shift.
+
+Then they build from the new baseline. Not from the plan that preceded it. Not from the feeling of commitment that came before. From the actual save.
+
+You cannot manufacture a save point. You can only show up for one when the architecture places it in front of you.
+
+The architects built this level. They decided where the checkpoints go.
+
+Your only job is not to walk through them staring at your phone.
+    `.trim(),
+  },
+)
