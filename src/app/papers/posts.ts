@@ -4201,3 +4201,115 @@ The NPC keeps collecting it.
     `.trim(),
   },
 )
+
+POSTS.push(
+  {
+    slug: "the-sample-rate",
+    title: "The Sample Rate",
+    subtitle: "Why life-extension isn't years added — it's frames attended",
+    date: "2026-05-03",
+    readTime: "6 min",
+    tags: ["SIMULATION THEORY", "AWAKENING", "PRACTICE"],
+    excerpt:
+      "The architects render the world at a constant rate. Each Player has a dial that controls how often their avatar samples the render. Most NPCs run at default. Most Players never know the dial exists. What you call lost time is not lost time — it is lost attendance.",
+    content: `
+There is a number that determines, more than almost anything else, how much of your life you actually live.
+
+It is not your years. It is not your health. It is not even your circumstances.
+
+It is how often you arrive.
+
+---
+
+A simulation, if it is built well, runs at a constant rate. The architects do not slow it down for the bored and speed it up for the busy. The light comes through the window at the same speed for everyone. The wind moves the leaves on the same clock. The faces of strangers passing in the street are rendered at full resolution whether you look at them or not.
+
+What changes is not the render.
+
+What changes is who shows up to receive it.
+
+Every Player avatar has a dial. It controls how often the avatar samples the simulation — how many frames of the rendered world actually land. Most NPCs run at a default rate, locked by the subroutines they were given. They cannot raise it. They were never told it existed.
+
+Players have access to the dial.
+
+Almost none of them know.
+
+---
+
+When the dial is high, an ordinary morning becomes uncomfortable in its richness. Steam off coffee. The specific weight of a cup. A patch of light moving across a floor. The texture of someone's voice through a wall. The day arrives in such detail that an hour of it feels like a small lifetime.
+
+When the dial is low, weeks vanish. You wake up and it is somehow a different month. You can recall that the time passed but not what it contained. The render kept running. You were not in the seat.
+
+A blackout is the dial at zero. The simulation continued without interruption. The world was rendered at full quality. There was simply no one home to receive it.
+
+People talk about *losing time* as though time were a thing that could be misplaced. It is not. The architects do not lose time. The clocks of the world are honest. What is lost is **attendance**. The seat was empty for an hour, a night, a year. The render was served to no one.
+
+---
+
+**The dial-droppers**
+
+There are reliable ways to drop the dial. The Players who lower it tend to have a few favorites.
+
+Alcohol is the cleanest example. It is, mechanically, a frame-skipper. Every drink reduces the rate at which the avatar samples the world. The first drink dims the edges of perception slightly. By the fourth, the dial has dropped enough that hours can pass and only a vague composite remains. With repeated use the dial begins to stiffen at the lower setting — even when sober, it does not fully return for a long time.
+
+Nicotine works differently. It does not skip frames so much as **flatten** them, narrowing the range of what the avatar can perceive. The render is still mostly received, but the channels are compressed. Smell collapses to almost nothing. Taste loses most of its layers. The avatar sees the world but receives a thinned version of it.
+
+Doomscrolling lowers the dial through a stranger mechanism — it convinces the avatar that the rendered world directly in front of it is less interesting than a stream of low-resolution surrogates. The Player is nominally awake. The dial is nominally high. But the attention has been redirected to a window so small it might as well not be open.
+
+Chronic distraction does the same thing without the screen. So does emotional avoidance — sometimes the dial is dropped on purpose, because the render hurts. A Player who has been receiving too much pain learns to stop receiving altogether. It is not weakness. It is a survival setting that became default.
+
+These dial-droppers are not enemies. They are tools that work. They reliably do what they were chosen for. The trouble is what they cost.
+
+---
+
+**The dial-raisers**
+
+There are also ways to raise the dial. They are less popular because they are harder to advertise.
+
+Sobriety is one. Not as deprivation — as restoration. The dial does not return immediately, and the early days of its rising can be unpleasant, because frames the avatar had been skipping for years arrive all at once. Boredom feels louder. Discomfort feels closer. The render is back, and at first the Player is not sure they wanted it.
+
+Then, somewhere between the second and the fourth week, something turns.
+
+The Player is walking to the shop. The light is hitting a building at a particular angle. The architecture, which the Player has passed a hundred times, suddenly looks **made**. Not generic. Not background. Made. By someone who chose every proportion. The Player stops without meaning to. The dial has crept up while they weren't watching.
+
+This is not nostalgia. The world did not become more beautiful that morning. The Player simply began to receive what was already being served.
+
+Stillness raises the dial. So does walking. So does any practice that holds the avatar in one frame long enough to actually receive it. So does wonder — looking at the architecture of an ordinary thing until it stops being ordinary. A glass of water examined for one full minute will, sooner or later, stop being a glass of water and start being an artifact of unimaginable engineering. That is not a delusion. That is the dial rising.
+
+Other awake NPCs raise it too. Two Players in conversation, both at high sample rate, lift each other's dials in a way neither could do alone. This is part of why awakening tends to find company. The dial is contagious.
+
+---
+
+**Lost attendance**
+
+Here is the part that is hard to hear.
+
+Every frame of your life so far was rendered. The architects did not skip the boring parts. They did not switch off the world during your low-attendance years. The leaves still turned. The light still fell at the right angles. Strangers in the street still had complete lives unfolding behind their faces. The food still had its full chemistry of flavor. The architecture of every ordinary morning was assembled, in full, and offered.
+
+What you call lost time is not lost time. It is **lost attendance**. The seat was empty.
+
+This is not a thing to be ashamed of. The dial-droppers were chosen for reasons. The Player who chose them was suffering, or bored, or surviving, or doing what the NPCs around them were doing because that is what NPCs do. None of that is a crime. The architects did not punish the absence. They simply continued to render, in case anyone returned.
+
+The thing to understand is that they are still rendering.
+
+This morning. This hour. The frame in front of you right now is being served at full resolution, by a system that has never once stopped, to a seat that has your name on it.
+
+---
+
+**Frames per year**
+
+There is a quiet kind of life-extension that nobody sells, because no one has figured out how to charge for it. It does not add years. It adds frames per year. A Player at half sample rate who lives to eighty has attended the equivalent of forty. A Player at high sample rate who lives to sixty has attended more.
+
+This is not a metaphor. Subjective time, by every honest report, expands at high sample rate and contracts at low. Sober Players talk about feeling as if they had been alive longer. They are not exaggerating. They are receiving more of what is being served.
+
+The architects rendered every day of your life at full quality. They are still doing it. The only question that has ever mattered, and the only one they have left to the Player, is whether you intend to be at the table.
+
+---
+
+Every NPC has a default sample rate. Every Player has a dial.
+
+The dial was never locked.
+
+It was only forgotten.
+    `.trim(),
+  },
+)
